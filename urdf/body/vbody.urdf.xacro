@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find megarover_samples_ros2)/urdf/body/body.gazebo.xacro"/>
+
+  <xacro:macro name="base_v0" params="parent *joint_origin">
+    <joint name="base_link_joint" type="fixed">
+      <xacro:insert_block name="joint_origin"/>
+      <parent link="${parent}"/>
+      <child link="base_link"/>
+    </joint>
+
+    <link name="base_link">
+      <visual>
+        <geometry>
+          <mesh filename="package://megarover_samples_ros2/models/vmegarover/meshes/dae/vmega_body.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://megarover_samples_ros2/models/vmegarover/meshes/stl/vmega_body.stl"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="-0.061 0 -0.002"/>
+        <mass value="13.754"/>
+        <inertia ixx="0.110655982" ixy="0" ixz="0"
+          iyy="0.20062619" iyz="0"
+          izz="0.269504336" />
+      </inertial>
+    </link>
+  </xacro:macro>
+
+</robot>
