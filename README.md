@@ -3,7 +3,7 @@
 ## Introduction
 
 This is a ROS2 Package to development package of megarover on Gazebo.  
-I used model and mesh files of <https://github.com/vstoneofficial/megarover_samples> as a reference.
+I used model, mesh and world files of <https://github.com/vstoneofficial/megarover_samples> as a reference.
 
 ## Requirements
 
