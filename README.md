@@ -26,6 +26,12 @@ $ source ~/dev_ws/install/setup.bash
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
 
+## Run Teleop
+
+```
+$ ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
 ## Launch RViz
 
 ```
