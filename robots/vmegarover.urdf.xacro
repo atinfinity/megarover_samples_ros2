@@ -25,14 +25,14 @@
   </xacro:wheel_v0>
 
   <!-- Front LRF -->
-  <xacro:lrf_v0 prefix="front" parent="base_link">
+  <!-- <xacro:lrf_v0 prefix="front" parent="base_link">
     <origin xyz="0.099 0 0.1015"/>
-  </xacro:lrf_v0>
+  </xacro:lrf_v0> -->
 
   <!-- Front LRF Upper-->
-  <!-- <xacro:lrf_v0 prefix="front" parent="base_link">
+  <xacro:lrf_v0 prefix="front" parent="base_link">
     <origin xyz="0.099 0 0.2155"  rpy="${M_PI} 0 0" />
-  </xacro:lrf_v0> -->
+  </xacro:lrf_v0>
 
   <!-- Rear LRF -->
   <!-- xacro:lrf_v0 prefix="rear" parent="base_link">
@@ -67,11 +67,11 @@
 
   <!-- LRF -->
   <xacro:lrf_gazebo_v0 prefix="front"
-                       min_rad="-1.57" max_rad="1.57"
-                       min_range="0.06" max_range="4.0"/>
+                       min_rad="-${M_PI}" max_rad="${M_PI}"
+                       min_range="0.06" max_range="10.0"/>
 
   <!-- xacro:lrf_gazebo_v0 prefix="rear"
                        min_rad="-1.57" max_rad="1.57"
-                       min_range="0.06" max_range="4.0"/ -->
+                       min_range="0.06" max_range="10.0"/ -->
 
 </robot>
