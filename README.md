@@ -44,7 +44,7 @@ $ rviz2 -d ~/dev_ws/src/megarover_samples_ros2/rviz/gmapping.rviz
 - [x] 2D Scan
 - [x] odometry
 - [x] teleop
-- [ ] gmapping
+- [ ] slam_toolbox
 - [ ] amcl
 - [ ] navigation
 
