@@ -2,14 +2,14 @@
   <model name='vmegarover'>
     <link name='base_footprint'>
       <inertial>
-        <pose>-0.058504 0 -0.000385 0 -0 0</pose>
+        <pose>-0.058504 0 0.001394 0 -0 0</pose>
         <mass>13.972</mass>
         <inertia>
-          <ixx>0.113046</ixx>
+          <ixx>0.120899</ixx>
           <ixy>0</ixy>
-          <ixz>-0.00355375</ixz>
-          <iyy>0.208553</iyy>
-          <iyz>0</iyz>
+          <ixz>-0.00746803</ixz>
+          <iyy>0.216406</iyy>
+          <iyz>1.61559e-27</iyz>
           <izz>0.275132</izz>
         </inertia>
       </inertial>
@@ -34,7 +34,7 @@
         </surface>
       </collision>
       <collision name='base_footprint_fixed_joint_lump__front_lrf_link_collision_1'>
-        <pose>0.099 0 0.1015 0 -0 0</pose>
+        <pose>0.099 0 0.2155 -3.14159 0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -60,7 +60,7 @@
         </geometry>
       </visual>
       <visual name='base_footprint_fixed_joint_lump__front_lrf_link_visual_1'>
-        <pose>0.099 0 0.1015 0 -0 0</pose>
+        <pose>0.099 0 0.2155 -3.14159 0 0</pose>
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
@@ -80,13 +80,13 @@
             <horizontal>
               <samples>1000</samples>
               <resolution>1</resolution>
-              <min_angle>-1.57</min_angle>
-              <max_angle>1.57</max_angle>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
             </horizontal>
           </scan>
           <range>
             <min>0.06</min>
-            <max>4</max>
+            <max>10</max>
             <resolution>0.001</resolution>
           </range>
           <noise>
@@ -102,7 +102,7 @@
           <output_type>sensor_msgs/LaserScan</output_type>
           <frame_name>front_lrf_link</frame_name>
         </plugin>
-        <pose>0.099 0 0.1015 0 -0 0</pose>
+        <pose>0.099 0 0.2155 -3.14159 -0 0</pose>
       </sensor>
     </link>
     <joint name='left_wheel_joint' type='revolute'>
