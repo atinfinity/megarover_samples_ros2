@@ -31,7 +31,7 @@ add_executable(pub_odom src/pub_odom.cpp)
 install(TARGETS pub_odom
   DESTINATION lib/${PROJECT_NAME})
 
-install(DIRECTORY launch models robots rviz urdf worlds
+install(DIRECTORY config launch models robots rviz urdf worlds
   DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
