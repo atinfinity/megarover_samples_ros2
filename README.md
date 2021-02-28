@@ -24,14 +24,12 @@ $ source ~/dev_ws/install/setup.bash
 ### Launch Gazebo
 
 ```
-$ source ~/dev_ws/install/setup.bash
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
 
 ### Launch Slam Toolbox for Mapping
 
 ```
-$ source ~/dev_ws/install/setup.bash
 $ ros2 launch megarover_samples_ros2 vmegarover_mapping.launch.py
 ```
 
