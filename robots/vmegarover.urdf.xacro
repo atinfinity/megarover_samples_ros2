@@ -67,7 +67,7 @@
 
   <!-- LRF -->
   <xacro:lrf_gazebo_v0 prefix="front"
-                       min_rad="-${M_PI}" max_rad="${M_PI}"
+                       min_rad="-3.14" max_rad="3.14"
                        min_range="0.06" max_range="10.0"/>
 
   <!-- xacro:lrf_gazebo_v0 prefix="rear"
