@@ -40,7 +40,7 @@ Visualization Manager:
         Y: 0
         Z: 0
       Plane: XY
-      Plane Cell Count: 10
+      Plane Cell Count: 30
       Reference Frame: <Fixed Frame>
       Value: true
     - Alpha: 1
@@ -65,8 +65,8 @@ Visualization Manager:
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
+      Size (m): 0.029999999329447746
+      Style: Spheres
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -91,6 +91,10 @@ Visualization Manager:
           Value: true
         lrf_link:
           Value: true
+        map:
+          Value: true
+        odom:
+          Value: true
         right_wheel_link:
           Value: true
       Marker Scale: 1
@@ -99,16 +103,18 @@ Visualization Manager:
       Show Axes: true
       Show Names: false
       Tree:
-        base_footprint:
-          base_link:
-            front_lrf_link:
-              {}
-            left_wheel_link:
-              {}
-            right_wheel_link:
-              {}
-          lrf_link:
-            {}
+        map:
+          odom:
+            base_footprint:
+              base_link:
+                front_lrf_link:
+                  {}
+                left_wheel_link:
+                  {}
+                right_wheel_link:
+                  {}
+              lrf_link:
+                {}
       Update Interval: 0
       Value: true
     - Alpha: 1
@@ -162,10 +168,30 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
+    - Alpha: 0.699999988079071
+      Class: rviz_default_plugins/Map
+      Color Scheme: map
+      Draw Behind: false
+      Enabled: true
+      Name: Map
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map
+      Update Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /map_updates
+      Use Timestamp: false
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: base_link
+    Fixed Frame: odom
     Frame Rate: 30
   Name: root
   Tools:
@@ -204,7 +230,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -1.5720000267028809
+      Angle: -1.562000036239624
       Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -214,11 +240,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 61.3039436340332
+      Scale: 39.42205047607422
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz_default_plugins)
-      X: -0.07491766661405563
-      Y: -0.14210350811481476
+      X: -0.09054364264011383
+      Y: 0.07411301136016846
     Saved: ~
 Window Geometry:
   Displays:
