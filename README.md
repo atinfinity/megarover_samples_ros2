@@ -45,7 +45,7 @@ $ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 
 ```
 $ mkdir ~/maps
-$ ros2 run nav2_map_server map_saver_cli -f ~/maps/vmegarover_samplemap
+$ ros2 launch megarover_samples_ros2 vmegarover_save_map.launch.py
 ```
 
 ## ToDo
