@@ -20,23 +20,32 @@ $ colcon build --symlink-install
 $ source ~/dev_ws/install/setup.bash
 ```
 
-## Launch Gazebo
+## Mapping
+### Launch Gazebo
 
 ```
+$ source ~/dev_ws/install/setup.bash
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
 
-## Run Teleop
+### Launch Slam Toolbox for Mapping
+
+```
+$ source ~/dev_ws/install/setup.bash
+$ ros2 launch megarover_samples_ros2 vmegarover_mapping.launch.py
+```
+
+### Launch Teleop
 
 ```
 $ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 
-## Launch RViz
+### Save Map
 
 ```
-$ source ~/dev_ws/install/setup.bash
-$ rviz2 -d ~/dev_ws/src/megarover_samples_ros2/rviz/mapping.rviz
+$ mkdir ~/maps
+$ ros2 run nav2_map_server map_saver_cli -f ~/maps/vmegarover_samplemap
 ```
 
 ## ToDo
@@ -44,7 +53,7 @@ $ rviz2 -d ~/dev_ws/src/megarover_samples_ros2/rviz/mapping.rviz
 - [x] 2D Scan
 - [x] odometry
 - [x] teleop
-- [ ] slam_toolbox
+- [x] slam_toolbox
 - [ ] amcl
 - [ ] navigation
 
