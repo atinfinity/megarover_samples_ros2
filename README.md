@@ -36,7 +36,7 @@ $ ros2 run teleop_twist_keyboard teleop_twist_keyboard
 
 ```
 $ source ~/dev_ws/install/setup.bash
-$ rviz2 -d ~/dev_ws/src/megarover_samples_ros2/rviz/gmapping.rviz
+$ rviz2 -d ~/dev_ws/src/megarover_samples_ros2/rviz/mapping.rviz
 ```
 
 ## ToDo
