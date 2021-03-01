@@ -5,7 +5,7 @@
     <gazebo reference="${prefix}_lrf_link">
       <sensor type="ray" name="${prefix}_lrf_sensor">
         <pose>0 0 0 0 0 0</pose>
-        <visualize>true</visualize>
+        <visualize>false</visualize>
         <update_rate>40</update_rate>
         <ray>
           <scan>
