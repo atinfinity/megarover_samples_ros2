@@ -46,12 +46,25 @@ $ mkdir ~/maps
 $ ros2 launch megarover_samples_ros2 vmegarover_save_map.launch.py
 ```
 
+## Navigation
+### Launch Gazebo
+
+```
+$ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
+```
+
+### Launch Navigation
+
+```
+$ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py
+```
+
 ## ToDo
 
 - [x] 2D Scan
 - [x] odometry
 - [x] teleop
 - [x] slam_toolbox
-- [ ] amcl
-- [ ] navigation
+- [x] amcl
+- [x] navigation
 
