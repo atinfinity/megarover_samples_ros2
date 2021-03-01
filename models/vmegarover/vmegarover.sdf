@@ -73,7 +73,7 @@
       <gravity>1</gravity>
       <velocity_decay/>
       <sensor name='front_lrf_sensor' type='ray'>
-        <visualize>1</visualize>
+        <visualize>0</visualize>
         <update_rate>40</update_rate>
         <ray>
           <scan>
