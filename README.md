@@ -56,7 +56,7 @@ $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ### Launch Navigation
 
 ```
-$ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py
+$ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/maps/vmegarover_samplemap.yaml
 ```
 
 ## ToDo
