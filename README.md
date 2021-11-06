@@ -7,15 +7,9 @@ I used model, mesh and world files of <https://github.com/vstoneofficial/megarov
 
 ## Requirements
 
-- ROS2 Foxy
+- ROS2 Galactic
 
 And, I have tested with [Eclipse Cyclone DDS](https://github.com/ros2/rmw_cyclonedds) as RMW implementation.
-If you use this RMW implementation, please install according to the following command.
-
-```
-$ sudo apt install ros-foxy-rmw-cyclonedds-cpp
-$ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-```
 
 ## Build
 
@@ -30,6 +24,7 @@ $ source ~/dev_ws/install/setup.bash
 ```
 
 ## Mapping
+
 ### Launch Gazebo
 
 ```
@@ -76,4 +71,3 @@ $ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/
 - [x] slam_toolbox
 - [x] amcl
 - [x] navigation
-
