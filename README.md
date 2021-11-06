@@ -16,7 +16,7 @@ And, I have tested with [Eclipse Cyclone DDS](https://github.com/ros2/rmw_cyclon
 ```
 $ mkdir -p ~/dev_ws/src
 $ cd ~/dev_ws/src
-$ git clone https://github.com/atinfinity/megarover_samples_ros2.git
+$ git clone https://github.com/atinfinity/megarover_samples_ros2.git -b galactic
 $ cd ..
 $ rosdep install -i --from-paths src/megarover_samples_ros2
 $ colcon build --symlink-install
