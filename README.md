@@ -5,6 +5,8 @@
 This is a ROS2 Package to develop package of megarover using Gazebo.  
 I used model, mesh and world files of <https://github.com/vstoneofficial/megarover_samples> as a reference.
 
+If you use ROS2 Galactic, please check [galactic](https://github.com/atinfinity/megarover_samples_ros2/tree/galactic) branch.
+
 ## Requirements
 
 - ROS2 Foxy
@@ -30,6 +32,7 @@ $ source ~/dev_ws/install/setup.bash
 ```
 
 ## Mapping
+
 ### Launch Gazebo
 
 ```
@@ -56,6 +59,7 @@ $ ros2 launch megarover_samples_ros2 vmegarover_save_map.launch.py
 ```
 
 ## Navigation
+
 ### Launch Gazebo
 
 ```
@@ -76,4 +80,3 @@ $ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/
 - [x] slam_toolbox
 - [x] amcl
 - [x] navigation
-
