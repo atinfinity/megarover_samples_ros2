@@ -47,6 +47,13 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}, robot_description],
     )
 
+    joint_state_publisher = Node(
+        package='joint_state_publisher',
+        executable='joint_state_publisher',
+        name='joint_state_publisher',
+        output='screen',
+        parameters=[{'use_sim_time': use_sim_time}])
+
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
@@ -77,6 +84,7 @@ def generate_launch_description():
         declare_use_sim_time,
         control_node,
         robot_state_publisher,
+        joint_state_publisher,
         joint_state_broadcaster_spawner,
         delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,
         cmd_vel_relay,
