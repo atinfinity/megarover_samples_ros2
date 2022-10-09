@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<robot name="vmegarover" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find megarover_samples_ros2)/urdf/body/vbody.urdf.xacro"/>
+  <xacro:include filename="$(find megarover_samples_ros2)/urdf/wheel/vwheel.urdf.xacro"/>
+  <xacro:include filename="$(find megarover_samples_ros2)/urdf/lrf/lrf.urdf.xacro"/>
+
+  <!-- =============== Link & Joint =============== -->
+  <!-- Base -->
+  <link name="base_footprint"/>
+  <xacro:base_v0 parent="base_footprint">
+    <origin xyz="0 0 0"/>
+  </xacro:base_v0>
+
+  <!-- Wheel -->
+  <!-- Right Wheel -->
+  <xacro:wheel_v0 prefix="right" parent="base_link">
+    <origin xyz="0 -0.14199 0.074742"/>
+    <axis xyz="0 1 0"/>
+  </xacro:wheel_v0>
+  <!-- Left Wheel -->
+  <xacro:wheel_v0 prefix="left" parent="base_link">
+    <origin xyz="0 0.14199 0.074742"  rpy="0 0 ${M_PI}" />
+    <axis xyz="0 -1 0"/>
+  </xacro:wheel_v0>
+
+  <!-- Front LRF -->
+  <!-- <xacro:lrf_v0 prefix="front" parent="base_link">
+    <origin xyz="0.099 0 0.1015"/>
+  </xacro:lrf_v0> -->
+
+  <!-- Front LRF Upper-->
+  <xacro:lrf_v0 prefix="front" parent="base_link">
+    <origin xyz="0.099 0 0.2155"  rpy="${M_PI} 0 0" />
+  </xacro:lrf_v0>
+
+  <!-- Rear LRF -->
+  <!-- xacro:lrf_v0 prefix="rear" parent="base_link">
+    <origin xyz="-0.289 0 0.1015"  rpy="0 0 ${M_PI}" />
+  </xacro:lrf_v0 -->
+
+  <link name="lrf_link"/>
+  <joint name="lrf_link_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="lrf_link"/>
+    <origin xyz="0.099 0 0.1015"/>
+  </joint>
+
+
+  <!-- ===============  Transmission =============== -->
+  <xacro:wheel_trans_v0 prefix="right"/>
+  <xacro:wheel_trans_v0 prefix="left"/>
+
+  <!-- =============== Gazebo =============== -->
+  <gazebo>
+    <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+      <ros>
+        <namespace>/vmegarover</namespace>        
+      </ros>
+      <update_rate>50</update_rate>
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+
+      <wheel_separation>0.284</wheel_separation>
+      <wheel_diameter>0.152</wheel_diameter>
+
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_footprint</robot_base_frame>
+    </plugin>
+  </gazebo>
+
+  <!-- Base -->
+  <xacro:base_gazebo_v0/>
+
+  <!-- Wheel -->
+  <xacro:wheel_gazebo_v0 prefix="right"/>
+  <xacro:wheel_gazebo_v0 prefix="left"/>
+
+  <!-- LRF -->
+  <xacro:lrf_gazebo_v0 prefix="front"
+                       min_rad="-3.14" max_rad="3.14"
+                       min_range="0.06" max_range="10.0"/>
+
+  <!-- xacro:lrf_gazebo_v0 prefix="rear"
+                       min_rad="-1.57" max_rad="1.57"
+                       min_range="0.06" max_range="10.0"/ -->
+
+</robot>
