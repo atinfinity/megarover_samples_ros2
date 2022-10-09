@@ -235,6 +235,7 @@
 
     <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
       <ros>
+        <namespace>/vmegarover</namespace>        
       </ros>
 
       <update_rate>50</update_rate>

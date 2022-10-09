@@ -18,36 +18,46 @@ def generate_launch_description():
     launch_file_dir = os.path.join(get_package_share_directory('megarover_samples_ros2'), 'launch')
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
-    return LaunchDescription([
-        IncludeLaunchDescription(
+    gzserver = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(pkg_gazebo_ros, 'launch', 'gzserver.launch.py')
             ),
             launch_arguments={'world': world}.items(),
-        ),
-
-        IncludeLaunchDescription(
+        )
+    
+    gzclient = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')
             ),
-        ),
-        
-        Node(
-            package='gazebo_ros',
-            executable='spawn_entity.py',
-            name='spawn_entity',
-            output='screen',
-            arguments=[
+        )
+
+    spawn_entiry = Node(
+        package='gazebo_ros',
+        executable='spawn_entity.py',
+        name='spawn_entity',
+        output='screen',
+        arguments=[
                 '-entity', 'vmegarover',
                 '-x', '0',
                 '-y', '0',
                 '-z', '1',
                 '-file', sdf_file,
-            ]
-        ),
+        ]
+    )
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([launch_file_dir, '/robot_state_publisher.launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time}.items(),
-        ),
+    robot_state_publisher_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [launch_file_dir, '/robot_state_publisher.launch.py']),
+        launch_arguments={'use_sim_time': use_sim_time}.items(),
+    )
+
+    cmd_vel_and_odom_relay = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([launch_file_dir, '/cmd_vel_and_odom_relay.launch.py']))
+
+    return LaunchDescription([
+        gzserver,
+        gzclient,
+        spawn_entiry,
+        robot_state_publisher_launch,
+        cmd_vel_and_odom_relay
     ])
