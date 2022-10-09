@@ -2,7 +2,7 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument, RegisterEventHandler
 from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
@@ -27,7 +27,7 @@ def generate_launch_description():
     )
 
     # load to xacro
-    doc = xacro.process_file(xacro_file)
+    doc = xacro.process_file(xacro_file, mappings={'use_ros2_control': 'true'})
     # generate urdf robot_description
     robot_desc = doc.toprettyxml(indent='  ')
     # fix descrption : `package://megarover_samples_ros2` to absolute path
@@ -52,14 +52,15 @@ def generate_launch_description():
         ]
     )
 
-    robot_state_publisher_launch = IncludeLaunchDescription(
+    # use diff_drive_controller on ros2_control
+    robot_state_publisher_on_ros2_control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            [launch_file_dir, '/robot_state_publisher.launch.py']),
+            [launch_file_dir, '/robot_state_publisher_on_ros2_control.launch.py']),
         launch_arguments={'use_sim_time': use_sim_time}.items(),
     )
 
     return LaunchDescription([
         gazebo,
         spawn_entiry,
-        robot_state_publisher_launch,
+        robot_state_publisher_on_ros2_control_launch,
     ])

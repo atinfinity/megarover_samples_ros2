@@ -2,7 +2,6 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/common.xacro"/>
-  <xacro:include filename="$(find megarover_samples_ros2)/urdf/wheel/wheel.transmission.xacro"/>
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/wheel/wheel.gazebo.xacro"/>
 
   <xacro:property name="wheel_radius" value="0.076"/>

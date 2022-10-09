@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="vmegarover" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="use_ros2_control" default="false" />
 
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/body/vbody.urdf.xacro"/>
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/wheel/vwheel.urdf.xacro"/>
@@ -46,31 +47,59 @@
     <origin xyz="0.099 0 0.1015"/>
   </joint>
 
-
-  <!-- ===============  Transmission =============== -->
-  <xacro:wheel_trans_v0 prefix="right"/>
-  <xacro:wheel_trans_v0 prefix="left"/>
-
   <!-- =============== Gazebo =============== -->
-  <gazebo>
-    <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
-      <ros>
-        <namespace>/vmegarover</namespace>        
-      </ros>
-      <update_rate>50</update_rate>
-      <left_joint>left_wheel_joint</left_joint>
-      <right_joint>right_wheel_joint</right_joint>
+  <xacro:if value="$(arg use_ros2_control)"> 
+    <!-- use ros2_control -->
+    <ros2_control name="GazeboSystem" type="system">
+      <hardware>
+        <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+      </hardware>
+      <joint name="left_wheel_joint">
+        <command_interface name="velocity">
+          <param name="min">-1</param>
+          <param name="max">1</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+      <joint name="right_wheel_joint">
+        <command_interface name="velocity">
+          <param name="min">-1</param>
+          <param name="max">1</param>
+        </command_interface>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+      </joint>
+    </ros2_control>
+    <gazebo>
+      <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+        <parameters>$(find megarover_samples_ros2)/config/diff_drive_controller.yaml</parameters>
+      </plugin>
+    </gazebo>  
+  </xacro:if>
 
-      <wheel_separation>0.284</wheel_separation>
-      <wheel_diameter>0.152</wheel_diameter>
+  <xacro:unless value="$(arg use_ros2_control)">
+    <!-- use libgazebo_ros_diff_drive.so -->
+    <gazebo>
+      <plugin name='diff_drive_controller' filename='libgazebo_ros_diff_drive.so'>
+        <ros>
+          <namespace>/vmegarover</namespace>        
+        </ros>
+        <update_rate>50</update_rate>
+        <left_joint>left_wheel_joint</left_joint>
+        <right_joint>right_wheel_joint</right_joint>
 
-      <publish_odom>true</publish_odom>
-      <publish_odom_tf>true</publish_odom_tf>
+        <wheel_separation>0.284</wheel_separation>
+        <wheel_diameter>0.152</wheel_diameter>
 
-      <odometry_frame>odom</odometry_frame>
-      <robot_base_frame>base_footprint</robot_base_frame>
-    </plugin>
-  </gazebo>
+        <publish_odom>true</publish_odom>
+        <publish_odom_tf>true</publish_odom_tf>
+
+        <odometry_frame>odom</odometry_frame>
+        <robot_base_frame>base_footprint</robot_base_frame>
+      </plugin>
+    </gazebo>
+  </xacro:unless>
 
   <!-- Base -->
   <xacro:base_gazebo_v0/>

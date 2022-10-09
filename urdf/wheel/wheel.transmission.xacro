@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<robot xmlns:xacro="http://ros.org/wiki/xacro">
-
-  <xacro:macro name="wheel_trans_v0" params="prefix">
-    <!-- <transmission> ommited in ros2-->
-    <!-- todo ros2_control system -->
-  </xacro:macro>
-  
-</robot>

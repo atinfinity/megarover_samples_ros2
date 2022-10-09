@@ -2,10 +2,11 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
 from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+from launch.conditions import IfCondition, UnlessCondition
 
 import xacro
 
@@ -49,18 +50,15 @@ def generate_launch_description():
         ]
     )
 
+    # use libgazebo_diff_drive_controller
     robot_state_publisher_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [launch_file_dir, '/robot_state_publisher.launch.py']),
         launch_arguments={'use_sim_time': use_sim_time}.items(),
     )
 
-    cmd_vel_and_odom_relay = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([launch_file_dir, '/cmd_vel_and_odom_relay.launch.py']))
-
     return LaunchDescription([
         gazebo,
         spawn_entiry,
         robot_state_publisher_launch,
-        cmd_vel_and_odom_relay
     ])
