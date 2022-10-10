@@ -23,23 +23,10 @@ def generate_launch_description():
         default_value='false',
         description='Use simulation (Gazebo) clock if true')
 
-    robot_controllers = PathJoinSubstitution(
-        [
-            FindPackageShare('megarover_samples_ros2'),
-            'config',
-            'diff_drive_controller.yaml',
-        ]
-    )
     robot_description = {
         'use_sim_time' : use_sim_time,
         'robot_description' : robot_description_content
     }
-    control_node = Node(
-        package='controller_manager',
-        executable='ros2_control_node',
-        parameters=[robot_description, robot_controllers],
-        output="screen"
-    )
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -84,7 +71,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         declare_use_sim_time,
-        control_node,
         robot_state_publisher,
         joint_state_publisher,
         joint_state_broadcaster_spawner,
