@@ -33,6 +33,7 @@
           </ros>
           <output_type>sensor_msgs/LaserScan</output_type>
           <!-- <frame_name> ommited, will default to ${prefix}_lrf_link-->
+          <frame_name>${prefix}_lrf_link</frame_name>
         </plugin>
       </sensor>
     </gazebo>

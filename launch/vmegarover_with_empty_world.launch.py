@@ -58,7 +58,7 @@ def generate_launch_description():
                 '-file', urdf_file,
         ]
     )
-    # Delay start of robot_controller after `joint_state_broadcaster`
+    # Delay start of spawn_entity after `create_fix_urdf`
     delay_spawn_entity_after_create_fix_urdf = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=create_fix_urdf,
