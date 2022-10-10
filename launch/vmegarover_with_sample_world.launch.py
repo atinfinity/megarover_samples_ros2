@@ -15,13 +15,13 @@ def generate_launch_description():
         'megarover_samples_ros2'), 'worlds', world_file_name)
 
     declare_use_ros2_control = DeclareLaunchArgument(
-        'use_ros2_control', default_value='true', description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false')
+        'use_ros2_control', default_value='false', description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false. gazebo_ros2_control is under development and deprecated')
     declare_world_fname = DeclareLaunchArgument(
         'world_fname', default_value=world, description='absolute path of gazebo world file')
     world_fname = LaunchConfiguration('world_fname')
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
-    use_ros2_control = LaunchConfiguration('use_ros2_control', default='true')
+    use_ros2_control = LaunchConfiguration('use_ros2_control', default='false')
 
     pkg_megarover_samples_ros2 = get_package_share_directory(
         'megarover_samples_ros2')
