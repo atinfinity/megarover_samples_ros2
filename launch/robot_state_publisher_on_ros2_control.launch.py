@@ -15,8 +15,8 @@ def generate_launch_description():
     xacro_dir = os.path.join(get_package_share_directory(
         'megarover_samples_ros2'), 'robots')
     xacro_file = os.path.join(xacro_dir, 'vmegarover.urdf.xacro')
-    robot_description = {'robot_description': Command(
-        ['xacro', ' ', xacro_file, ' use_ros2_control:=true'])}
+    robot_description_content = Command(
+        ['xacro', ' ', xacro_file, ' use_ros2_control:=true'])
 
     declare_use_sim_time = DeclareLaunchArgument(
         'use_sim_time',
@@ -30,12 +30,14 @@ def generate_launch_description():
             'diff_drive_controller.yaml',
         ]
     )
-
+    robot_description = {
+        'use_sim_time' : use_sim_time,
+        'robot_description' : robot_description_content
+    }
     control_node = Node(
         package='controller_manager',
         executable='ros2_control_node',
-        parameters=[{'use_sim_time': use_sim_time,
-                     'robot_description': robot_description}, robot_controllers],
+        parameters=[robot_description, robot_controllers],
         output="screen"
     )
 
@@ -44,7 +46,7 @@ def generate_launch_description():
         executable='robot_state_publisher',
         name='robot_state_publisher',
         output='screen',
-        parameters=[{'use_sim_time': use_sim_time}, robot_description],
+        parameters=[robot_description],
     )
 
     joint_state_publisher = Node(
