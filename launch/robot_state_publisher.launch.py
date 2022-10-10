@@ -20,6 +20,7 @@ def generate_launch_description():
         'use_sim_time',
         default_value='false',
         description='Use simulation (Gazebo) clock if true')
+        
     robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',

@@ -43,6 +43,7 @@ def generate_launch_description():
         output='screen',
         parameters=[{'use_sim_time': use_sim_time}])
 
+    
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
@@ -53,7 +54,8 @@ def generate_launch_description():
     robot_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["diff_drive_controller", "-c", "/controller_manager"],
+        arguments=["diff_drive_controller", 
+                    "--controller-manager", "/controller_manager"],
     )
 
     # Delay start of robot_controller after `joint_state_broadcaster`
