@@ -2,20 +2,25 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, RegisterEventHandler, ExecuteProcess
+from launch.event_handlers import OnProcessExit
 from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
-from launch.conditions import IfCondition, UnlessCondition
+from launch.substitutions import LaunchConfiguration, FindExecutable
 
-import xacro
 
 def generate_launch_description():
-    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    declare_use_ros2_control = DeclareLaunchArgument(
+        'use_ros2_control', default_value='true', description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false')
 
-    pkg_megarover_samples_ros2 = get_package_share_directory('megarover_samples_ros2')
-    xacro_file = os.path.join(pkg_megarover_samples_ros2, 'robots', 'vmegarover.urdf.xacro')
-    launch_file_dir = os.path.join(get_package_share_directory('megarover_samples_ros2'), 'launch')
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    use_ros2_control = LaunchConfiguration('use_ros2_control', default='true')
+
+    pkg_megarover_samples_ros2 = get_package_share_directory(
+        'megarover_samples_ros2')
+    launch_file_dir = os.path.join(pkg_megarover_samples_ros2, 'launch')
+    scripts_file_dir = os.path.join(pkg_megarover_samples_ros2, 'scripts')
+
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
     gazebo = IncludeLaunchDescription(
@@ -24,18 +29,22 @@ def generate_launch_description():
         ),
     )
 
-    # load to xacro
-    doc = xacro.process_file(xacro_file)
-    # generate urdf robot_description
-    robot_desc = doc.toprettyxml(indent='  ')
-    # fix descrption : `package://megarover_samples_ros2` to absolute path
-    # ref. <https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1191>
-    fix_robot_desc = robot_desc.replace('package://megarover_samples_ros2', pkg_megarover_samples_ros2)
-    # write urdf file for spawn_entity.py
-    urdf_file = os.path.join(pkg_megarover_samples_ros2, 'robots', 'vmegarover.urdf')
-    with open(urdf_file, 'w') as f:
-        f.write(fix_robot_desc)
-        
+    # xacro_file = os.path.join(
+    #     pkg_megarover_samples_ros2, 'robots', 'vmegarover.urdf.xacro')
+    create_fix_urdf = ExecuteProcess(
+        # python3 [pkg]/create_fix_urdf.py (true|false)
+        cmd=[[
+            FindExecutable(name='python3'),
+            ' ',
+            scripts_file_dir+'/create_fix_urdf.py',
+            ' ',
+            use_ros2_control
+        ]],
+        shell=True
+    )
+    # generate by `create_fix_urdf`
+    urdf_file = os.path.join(pkg_megarover_samples_ros2,
+                             'robots', 'vmegarover.urdf')
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
@@ -49,16 +58,26 @@ def generate_launch_description():
                 '-file', urdf_file,
         ]
     )
+    # Delay start of robot_controller after `joint_state_broadcaster`
+    delay_spawn_entity_after_create_fix_urdf = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=create_fix_urdf,
+            on_exit=[spawn_entity]
+        )
+    )
 
-    # use libgazebo_diff_drive_controller
-    robot_state_publisher_launch = IncludeLaunchDescription(
+    # use diff_drive_controller on ros2_control
+    robot_state_publisher_on_ros2_control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [launch_file_dir, '/robot_state_publisher.launch.py']),
-        launch_arguments={'use_sim_time': use_sim_time}.items(),
+        launch_arguments={'use_sim_time': use_sim_time,
+                          'use_ros2_control': use_ros2_control}.items(),
     )
 
     return LaunchDescription([
+        declare_use_ros2_control,
         gazebo,
-        spawn_entity,
-        robot_state_publisher_launch,
+        create_fix_urdf,
+        delay_spawn_entity_after_create_fix_urdf,       # execute spawn_entity
+        robot_state_publisher_on_ros2_control_launch,
     ])
