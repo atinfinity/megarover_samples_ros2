@@ -38,7 +38,7 @@ def generate_launch_description():
     with open(urdf_file, 'w') as f:
         f.write(fix_robot_desc)
         
-    spawn_entiry = Node(
+    spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
         name='spawn_entity',
@@ -60,6 +60,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         gazebo,
-        spawn_entiry,
+        spawn_entity,
         robot_state_publisher_launch,
     ])

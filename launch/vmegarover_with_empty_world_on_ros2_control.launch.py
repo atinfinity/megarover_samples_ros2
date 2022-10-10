@@ -2,11 +2,10 @@ import os
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription
 from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
-from launch.conditions import IfCondition, UnlessCondition
 
 import xacro
 
@@ -42,7 +41,7 @@ def generate_launch_description():
     with open(urdf_file, 'w') as f:
         f.write(fix_robot_desc)
 
-    spawn_entiry = Node(
+    spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
         name='spawn_entity',
@@ -65,6 +64,6 @@ def generate_launch_description():
 
     return LaunchDescription([
         gazebo,
-        spawn_entiry,
+        spawn_entity,
         robot_state_publisher_on_ros2_control_launch,
     ])
