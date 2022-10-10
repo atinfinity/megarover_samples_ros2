@@ -8,6 +8,11 @@ controller_manager:
     diff_drive_controller:
       type: diff_drive_controller/DiffDriveController
 
+joint_state_broadcaster:
+  ros__parameters:
+    joints: ["left_wheel_joint", "right_wheel_joint"]
+    interfaces: ["position", "velocity"]
+
 diff_drive_controller:
   ros__parameters:
     left_wheel_names: ["left_wheel_joint"]
