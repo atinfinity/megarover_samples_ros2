@@ -33,7 +33,7 @@ diff_drive_controller:
     pose_covariance_diagonal : [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
     twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
 
-    open_loop: true                     # !! If use Gazebo, it is currently probably the most accurate
+    # open_loop: true                     
     enable_odom_tf: true
 
     # cmd_vel_timeout: 500.0            # !! Does not work well on gazebo
