@@ -7,19 +7,11 @@ I used model, mesh and world files of <https://github.com/vstoneofficial/megarov
 
 If you use ROS2 Galactic, please check [galactic](https://github.com/atinfinity/megarover_samples_ros2/tree/galactic) branch.
 
-If you use ROS2 Humble, please check [humble](https://github.com/atinfinity/megarover_samples_ros2/tree/humble) branch.
+## Requirements
 
-## Requirements(Foxy, Galactic)
+- ROS2 Humble
 
-- ROS2 Foxy
-
-And, I have tested with [Eclipse Cyclone DDS](https://github.com/ros2/rmw_cyclonedds) as RMW implementation.
-If you use this RMW implementation, please install according to the following command.
-
-```
-$ sudo apt install ros-foxy-rmw-cyclonedds-cpp
-$ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-```
+And, I have tested with [eProsima Fast DDS](https://www.eprosima.com/index.php/products-all/eprosima-fast-dds) as RMW implementation.
 
 ## Build
 
