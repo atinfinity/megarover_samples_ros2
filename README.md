@@ -7,6 +7,8 @@ I used model, mesh and world files of <https://github.com/vstoneofficial/megarov
 
 If you use ROS2 Galactic, please check [galactic](https://github.com/atinfinity/megarover_samples_ros2/tree/galactic) branch.
 
+If you use ROS2 Humble, please check [humble](https://github.com/atinfinity/megarover_samples_ros2/tree/humble) branch.
+
 ## Requirements
 
 - ROS2 Foxy
