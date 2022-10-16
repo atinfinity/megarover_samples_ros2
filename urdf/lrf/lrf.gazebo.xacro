@@ -27,10 +27,13 @@
             <stddev>0.03</stddev>
           </noise>
         </ray>
-        <plugin name="gazebo_ros_${prefix}_lrf_controller" filename="libgazebo_ros_laser.so">
-          <!-- <topicName>${prefix}/scan</topicName> -->
-          <topicName>/scan</topicName>
-          <frameName>${prefix}_lrf_link</frameName>
+        <plugin name='gazebo_ros_front_lrf_controller' filename='libgazebo_ros_ray_sensor.so'>
+          <ros>
+            <remapping>~/out:=scan</remapping>
+          </ros>
+          <output_type>sensor_msgs/LaserScan</output_type>
+          <!-- <frame_name> ommited, will default to ${prefix}_lrf_link-->
+          <frame_name>${prefix}_lrf_link</frame_name>
         </plugin>
       </sensor>
     </gazebo>
