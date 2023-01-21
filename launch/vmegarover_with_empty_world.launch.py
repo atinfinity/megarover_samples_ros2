@@ -12,9 +12,12 @@ from launch.substitutions import LaunchConfiguration, FindExecutable
 def generate_launch_description():
     declare_use_ros2_control = DeclareLaunchArgument(
         'use_ros2_control', default_value='false', description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false. gazebo_ros2_control is under development and deprecated')
+    declare_gui = DeclareLaunchArgument(
+        'gui', default_value='true', description='Set to "false" to run headless.')
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     use_ros2_control = LaunchConfiguration('use_ros2_control', default='false')
+    gui = LaunchConfiguration('gui', default='true')
 
     pkg_megarover_samples_ros2 = get_package_share_directory(
         'megarover_samples_ros2')
@@ -27,6 +30,9 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py')
         ),
+        launch_arguments={
+                'gui': gui,
+            }.items()
     )
 
     # xacro_file = os.path.join(
@@ -76,6 +82,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         declare_use_ros2_control,
+        declare_gui,
         gazebo,
         create_fix_urdf,
         delay_spawn_entity_after_create_fix_urdf,       # execute spawn_entity
