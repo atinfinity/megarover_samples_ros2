@@ -29,6 +29,8 @@ $ source ~/dev_ws/install/setup.bash
 
 ### Launch Gazebo
 
+If you use headless mode, add the option `gui:=false`.
+
 ```
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
