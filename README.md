@@ -68,6 +68,8 @@ $ ros2 launch megarover_samples_ros2 vmegarover_save_map.launch.py
 
 ### Launch Gazebo
 
+If you use headless mode, add the option `gui:=false`.
+
 ```
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
