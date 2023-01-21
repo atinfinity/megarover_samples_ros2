@@ -32,7 +32,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             'gui': gui
-        }.items()
+        }.items(),
     )
 
     # xacro_file = os.path.join(

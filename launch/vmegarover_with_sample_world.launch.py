@@ -41,7 +41,6 @@ def generate_launch_description():
             'world': world_fname,
             'gui': gui
         }.items(),
-
     )
 
     # xacro_file = os.path.join(
