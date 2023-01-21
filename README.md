@@ -28,7 +28,7 @@ $ mkdir -p ~/dev_ws/src
 $ cd ~/dev_ws/src
 $ git clone https://github.com/atinfinity/megarover_samples_ros2.git
 $ cd ..
-$ rosdep install -i --from-paths src/megarover_samples_ros2
+$ rosdep install -y -i --from-paths src/megarover_samples_ros2
 $ colcon build --symlink-install
 $ source ~/dev_ws/install/setup.bash
 ```
@@ -36,6 +36,8 @@ $ source ~/dev_ws/install/setup.bash
 ## Mapping
 
 ### Launch Gazebo
+
+If you use headless mode, add the option `gui:=false`.
 
 ```
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
@@ -63,6 +65,8 @@ $ ros2 launch megarover_samples_ros2 vmegarover_save_map.launch.py
 ## Navigation
 
 ### Launch Gazebo
+
+If you use headless mode, add the option `gui:=false`.
 
 ```
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
