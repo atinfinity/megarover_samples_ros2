@@ -20,7 +20,7 @@ $ mkdir -p ~/dev_ws/src
 $ cd ~/dev_ws/src
 $ git clone https://github.com/atinfinity/megarover_samples_ros2.git
 $ cd ..
-$ rosdep install -i --from-paths src/megarover_samples_ros2
+$ rosdep install -y -i --from-paths src/megarover_samples_ros2
 $ colcon build --symlink-install
 $ source ~/dev_ws/install/setup.bash
 ```
