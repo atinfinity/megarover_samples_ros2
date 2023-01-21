@@ -31,8 +31,8 @@ def generate_launch_description():
             os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py')
         ),
         launch_arguments={
-                'gui': gui,
-            }.items()
+            'gui': gui
+        }.items(),
     )
 
     # xacro_file = os.path.join(
