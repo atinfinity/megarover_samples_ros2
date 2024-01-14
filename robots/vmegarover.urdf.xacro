@@ -5,6 +5,7 @@
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/body/vbody.urdf.xacro"/>
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/wheel/vwheel.urdf.xacro"/>
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/lrf/lrf.urdf.xacro"/>
+  <xacro:include filename="$(find megarover_samples_ros2)/urdf/camera/camera.urdf.xacro"/>
 
   <!-- =============== Link & Joint =============== -->
   <!-- Base -->
@@ -45,6 +46,24 @@
     <parent link="base_footprint"/>
     <child link="lrf_link"/>
     <origin xyz="0.099 0 0.1015"/>
+  </joint>
+
+  <xacro:camera_v0 prefix="front" parent="base_link">
+    <origin xyz="0.099 0 0.2515"/>
+  </xacro:camera_v0>
+
+  <!-- Front Camera -->
+  <link name="camera_link"/>
+  <joint name="camera_link_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="camera_link"/>
+    <origin xyz="0.099 0 0.3015"/>
+  </joint>
+  <link name="camera_depth_link"/>
+  <joint name="camera_depth_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
+    <parent link="camera_link"/>
+    <child link="camera_depth_link"/>
   </joint>
 
   <!-- =============== Gazebo =============== -->
@@ -116,5 +135,8 @@
   <!-- xacro:lrf_gazebo_v0 prefix="rear"
                        min_rad="-1.57" max_rad="1.57"
                        min_range="0.06" max_range="10.0"/ -->
+
+  <!-- Camera -->
+  <xacro:camera_gazebo_v0 prefix="front"/>
 
 </robot>

@@ -87,6 +87,7 @@ $ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/
 ## ToDo
 
 - [x] 2D Scan
+- [x] RGBD Camera
 - [x] odometry
 - [x] teleop
 - [x] slam_toolbox
