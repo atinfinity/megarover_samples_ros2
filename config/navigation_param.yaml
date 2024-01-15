@@ -153,7 +153,7 @@ controller_server:
       temperature: 0.3
       gamma: 0.015
       motion_model: "DiffDrive"
-      visualize: true
+      visualize: false
       TrajectoryVisualizer:
         trajectory_step: 5
         time_step: 3
