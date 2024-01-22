@@ -93,7 +93,9 @@
         </joint>
       </ros2_control>
       <gazebo>
-        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+        <plugin
+          filename="libgazebo_ros2_control.so"
+          name="gazebo_ros2_control">
           <ros>
             <remapping>~/cmd_vel_unstamped:=/cmd_vel</remapping>
             <remapping>~/odom:=/odom</remapping>
@@ -106,7 +108,9 @@
     <xacro:unless value="$(arg use_ros2_control)">
       <!-- use libgazebo_ros_diff_drive.so -->
       <gazebo>
-        <plugin name='diff_drive_controller' filename='libgazebo_ros_diff_drive.so'>
+        <plugin
+          filename="libgazebo_ros_diff_drive.so"
+          name="diff_drive_controller">
           <ros>
             <namespace>/</namespace>
           </ros>
@@ -132,7 +136,11 @@
       <!-- use ros2_control -->
       <ros2_control name="GazeboSystem" type="system">
         <hardware>
+          <!-- Garden or later -->
+          <!--
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+          -->
+          <plugin>ign_ros2_control/IgnitionSystem</plugin>
         </hardware>
         <joint name="left_wheel_joint">
           <command_interface name="velocity">
@@ -152,8 +160,20 @@
         </joint>
       </ros2_control>
       <gazebo>
-        <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="gz_ros2_control-system">
+        <!-- Garden or later -->
+        <!--
+        <plugin
+          filename="gz_ros2_control-system"
+          name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        -->
+        <plugin
+          filename="ign_ros2_control-system"
+          name="ign_ros2_control::IgnitionROS2ControlPlugin">
           <parameters>$(find megarover_samples_ros2)/config/diff_drive_controller.yaml</parameters>
+          <ros>
+            <remapping>~/cmd_vel_unstamped:=/cmd_vel</remapping>
+            <remapping>~/odom:=/odom</remapping>
+          </ros>
         </plugin>
       </gazebo>
     </xacro:if>
@@ -161,7 +181,8 @@
     <xacro:unless value="$(arg use_ros2_control)">
       <!-- use ignition-gazebo-diff-drive-system -->
       <gazebo>
-        <!-- Garden or later
+        <!-- Garden or later -->
+        <!--
         <plugin
           filename="gz-sim-diff-drive-system"
           name="gz::sim::systems::DiffDrive">
@@ -188,7 +209,7 @@
 
           <!-- Topics -->
           <topic>/cmd_vel</topic>
-          <!-- <odom_topic>/odometry/wheels</odom_topic> -->
+          <odom_topic>/odom</odom_topic>
           <!-- <tf_topic>/tf_gazebo</tf_topic> -->
         </plugin>
       </gazebo>

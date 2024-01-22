@@ -49,6 +49,7 @@ def generate_launch_description():
             PathJoinSubstitution([launch_file_dir, 'utils', 'ignition_gazebo.launch.py'])
         ),
         launch_arguments={
+            'use_sim_time': use_sim_time,
             'gui': gui,
             'world_fname': ''
         }.items(),

@@ -9,12 +9,15 @@ def generate_launch_description():
         executable="spawner",
         arguments=["joint_state_broadcaster",
                    "--controller-manager", "/controller_manager"],
+        output='screen'
     )
+
     diff_drive_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
         arguments=["diff_drive_controller",
                    "--controller-manager", "/controller_manager"],
+        output='screen'
     )
 
     return LaunchDescription([

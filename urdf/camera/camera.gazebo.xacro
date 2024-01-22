@@ -38,9 +38,11 @@
       </xacro:if>
 
       <xacro:if value="${gazebo == 'ignition'}">
-        <sensor name="${prefix}_camera_sensor" type="depth_camera">
+        <sensor name="${prefix}_camera_sensor" type="rgbd_camera">
           <pose>0 0 0 0 0 0</pose>
+          <topic>${prefix}_camera_sensor</topic>
           <update_rate>30.0</update_rate>
+          <ignition_frame_id>camera_depth_link</ignition_frame_id>
           <camera>
             <horizontal_fov>1.56207</horizontal_fov>
             <image>
