@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <robot name="vmegarover" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="gazebo" default="classic" />
   <xacro:arg name="use_ros2_control" default="false" />
 
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/body/vbody.urdf.xacro"/>
@@ -67,58 +68,115 @@
   </joint>
 
   <!-- =============== Gazebo =============== -->
-  <xacro:if value="$(arg use_ros2_control)"> 
-    <!-- use ros2_control -->
-    <ros2_control name="GazeboSystem" type="system">
-      <hardware>
-        <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-      </hardware>
-      <joint name="left_wheel_joint">
-        <command_interface name="velocity">
-          <param name="min">-1</param>
-          <param name="max">1</param>
-        </command_interface>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-      </joint>
-      <joint name="right_wheel_joint">
-        <command_interface name="velocity">
-          <param name="min">-1</param>
-          <param name="max">1</param>
-        </command_interface>
-        <state_interface name="position"/>
-        <state_interface name="velocity"/>
-      </joint>
-    </ros2_control>
-    <gazebo>
-      <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-        <parameters>$(find megarover_samples_ros2)/config/diff_drive_controller.yaml</parameters>
-      </plugin>
-    </gazebo>  
+  <xacro:if value="${'$(arg gazebo)' == 'classic'}">
+    <xacro:if value="$(arg use_ros2_control)">
+      <!-- use ros2_control -->
+      <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+          <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+        <joint name="left_wheel_joint">
+          <command_interface name="velocity">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+        </joint>
+        <joint name="right_wheel_joint">
+          <command_interface name="velocity">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+        </joint>
+      </ros2_control>
+      <gazebo>
+        <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+          <parameters>$(find megarover_samples_ros2)/config/diff_drive_controller.yaml</parameters>
+        </plugin>
+      </gazebo>
+    </xacro:if>
+
+    <xacro:unless value="$(arg use_ros2_control)">
+      <!-- use libgazebo_ros_diff_drive.so -->
+      <gazebo>
+        <plugin name='diff_drive_controller' filename='libgazebo_ros_diff_drive.so'>
+          <ros>
+            <namespace>/vmegarover</namespace>
+          </ros>
+          <update_rate>50</update_rate>
+          <left_joint>left_wheel_joint</left_joint>
+          <right_joint>right_wheel_joint</right_joint>
+
+          <wheel_separation>0.284</wheel_separation>
+          <wheel_diameter>0.152</wheel_diameter>
+
+          <publish_odom>true</publish_odom>
+          <publish_odom_tf>true</publish_odom_tf>
+
+          <odometry_frame>odom</odometry_frame>
+          <robot_base_frame>base_footprint</robot_base_frame>
+        </plugin>
+      </gazebo>
+    </xacro:unless>
   </xacro:if>
 
-  <xacro:unless value="$(arg use_ros2_control)">
-    <!-- use libgazebo_ros_diff_drive.so -->
-    <gazebo>
-      <plugin name='diff_drive_controller' filename='libgazebo_ros_diff_drive.so'>
-        <ros>
-          <namespace>/vmegarover</namespace>        
-        </ros>
-        <update_rate>50</update_rate>
-        <left_joint>left_wheel_joint</left_joint>
-        <right_joint>right_wheel_joint</right_joint>
+  <xacro:if value="${'$(arg gazebo)' == 'ignition'}">
+    <xacro:if value="$(arg use_ros2_control)">
+      <!-- use ros2_control -->
+      <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+        </hardware>
+        <joint name="left_wheel_joint">
+          <command_interface name="velocity">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+        </joint>
+        <joint name="right_wheel_joint">
+          <command_interface name="velocity">
+            <param name="min">-1</param>
+            <param name="max">1</param>
+          </command_interface>
+          <state_interface name="position"/>
+          <state_interface name="velocity"/>
+        </joint>
+      </ros2_control>
+      <gazebo>
+        <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin" filename="gz_ros2_control-system">
+          <parameters>$(find megarover_samples_ros2)/config/diff_drive_controller.yaml</parameters>
+        </plugin>
+      </gazebo>
+    </xacro:if>
 
-        <wheel_separation>0.284</wheel_separation>
-        <wheel_diameter>0.152</wheel_diameter>
+    <xacro:unless value="$(arg use_ros2_control)">
+      <!-- use ignition-gazebo-diff-drive-system -->
+      <gazebo>
+        <plugin name='ignition::gazebo::systems::DiffDrive' filename='ignition-gazebo-diff-drive-system'>
+          <ros>
+            <namespace>/vmegarover</namespace>
+          </ros>
+          <update_rate>50</update_rate>
+          <left_joint>left_wheel_joint</left_joint>
+          <right_joint>right_wheel_joint</right_joint>
 
-        <publish_odom>true</publish_odom>
-        <publish_odom_tf>true</publish_odom_tf>
+          <wheel_separation>0.284</wheel_separation>
+          <wheel_diameter>0.152</wheel_diameter>
 
-        <odometry_frame>odom</odometry_frame>
-        <robot_base_frame>base_footprint</robot_base_frame>
-      </plugin>
-    </gazebo>
-  </xacro:unless>
+          <publish_odom>true</publish_odom>
+          <publish_odom_tf>true</publish_odom_tf>
+
+          <odometry_frame>odom</odometry_frame>
+          <robot_base_frame>base_footprint</robot_base_frame>
+        </plugin>
+      </gazebo>
+    </xacro:unless>
+  </xacro:if>
 
   <!-- Base -->
   <xacro:base_gazebo_v0/>
@@ -128,7 +186,8 @@
   <xacro:wheel_gazebo_v0 prefix="left"/>
 
   <!-- LRF -->
-  <xacro:lrf_gazebo_v0 prefix="front"
+  <xacro:lrf_gazebo_v0 gazebo="$(arg gazebo)"
+                       prefix="front"
                        min_rad="-3.14" max_rad="3.14"
                        min_range="0.06" max_range="10.0"/>
 
@@ -137,6 +196,13 @@
                        min_range="0.06" max_range="10.0"/ -->
 
   <!-- Camera -->
-  <xacro:camera_gazebo_v0 prefix="front"/>
+  <xacro:camera_gazebo_v0 gazebo="$(arg gazebo)" prefix="front"/>
 
+  <xacro:if value="${'$(arg gazebo)' == 'ignition'}">
+    <gazebo>
+      <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+      </plugin>
+    </gazebo>
+  </xacro:if>
 </robot>

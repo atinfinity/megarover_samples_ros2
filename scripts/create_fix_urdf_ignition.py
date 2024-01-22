@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     # load to xacro
     doc = xacro.process_file(xacro_file, mappings={
-                             'gazebo' : 'classic',
+                             'gazebo' : 'ignition',
                              'use_ros2_control': use_ros2_control})
     # generate urdf robot_description
     robot_desc = doc.toprettyxml(indent='  ')
