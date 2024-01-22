@@ -6,7 +6,7 @@ from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, Regi
 from launch.event_handlers import OnProcessExit
 from launch_ros.actions import Node
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, FindExecutable
+from launch.substitutions import Command, LaunchConfiguration, FindExecutable
 
 
 def generate_launch_description():
@@ -35,7 +35,8 @@ def generate_launch_description():
             os.path.join(pkg_gazebo_ros_sim, 'launch', 'gz_sim.launch.py')
         ),
         launch_arguments={
-            'gz_args': [world_fname, ' -v 0']  # headless : --headless-rendering
+            # 'gz_args': [' -r -v 4 ', world_fname]  # headless : --headless-rendering
+            'gz_args': [' -r -v 0 empty.sdf']  # headless : --headless-rendering
         }.items(),
     )
 
@@ -63,10 +64,27 @@ def generate_launch_description():
                 '-name', 'vmegarover',
                 '-x', '0',
                 '-y', '0',
-                '-z', '1',
+                '-z', '0.5',
                 '-file', urdf_file,
         ]
     )
+
+    xacro_file = os.path.join(pkg_megarover_samples_ros2,
+                             'robots', 'vmegarover.urdf.xacro')
+    robot_description_content = Command(
+        ['xacro', ' ', xacro_file, ' use_ros2_control:=', use_ros2_control])
+    robot_description_params = {
+        'use_sim_time': use_sim_time,
+        'robot_description': robot_description_content
+    }
+    robot_state_publisher = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[robot_description_params],
+    )
+
     # Delay start of spawn_entity after `create_fix_urdf_ignition`
     delay_spawn_entity_after_create_fix_urdf_ignition = RegisterEventHandler(
         event_handler=OnProcessExit(
@@ -89,5 +107,6 @@ def generate_launch_description():
         gazebo_sim,
         create_fix_urdf_ignition,
         delay_spawn_entity_after_create_fix_urdf_ignition,       # execute spawn_entity
+        # robot_state_publisher,
         # robot_state_publisher_on_ros2_control_launch,
     ])

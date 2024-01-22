@@ -157,22 +157,29 @@
     <xacro:unless value="$(arg use_ros2_control)">
       <!-- use ignition-gazebo-diff-drive-system -->
       <gazebo>
-        <plugin name='ignition::gazebo::systems::DiffDrive' filename='ignition-gazebo-diff-drive-system'>
-          <ros>
-            <namespace>/vmegarover</namespace>
-          </ros>
-          <update_rate>50</update_rate>
+        <!-- Garden or later
+        <plugin
+          filename="gz-sim-diff-drive-system"
+          name="gz::sim::systems::DiffDrive">
+        -->
+        <!-- Fortress -->
+        <plugin
+          filename="ignition-gazebo-diff-drive-system"
+          name="ignition::gazebo::systems::DiffDrive">
           <left_joint>left_wheel_joint</left_joint>
           <right_joint>right_wheel_joint</right_joint>
-
           <wheel_separation>0.284</wheel_separation>
-          <wheel_diameter>0.152</wheel_diameter>
+          <wheel_radius>${0.152/2.0}</wheel_radius>
+          <odom_publish_frequency>50</odom_publish_frequency>
 
-          <publish_odom>true</publish_odom>
-          <publish_odom_tf>true</publish_odom_tf>
+          <!-- Output -->
+          <frame_id>odom</frame_id>
+          <child_frame_id>base_footprint</child_frame_id>
 
-          <odometry_frame>odom</odometry_frame>
-          <robot_base_frame>base_footprint</robot_base_frame>
+          <!-- Topics -->
+          <topic>/cmd_vel</topic>
+          <!-- <odom_topic>/odometry/wheels</odom_topic> -->
+          <!-- <tf_topic>/tf_gazebo</tf_topic> -->
         </plugin>
       </gazebo>
     </xacro:unless>
@@ -200,7 +207,9 @@
 
   <xacro:if value="${'$(arg gazebo)' == 'ignition'}">
     <gazebo>
-      <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+      <plugin
+        filename="ignition-gazebo-sensors-system"
+        name="ignition::gazebo::systems::Sensors">
         <render_engine>ogre2</render_engine>
       </plugin>
     </gazebo>
