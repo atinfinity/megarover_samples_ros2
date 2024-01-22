@@ -172,6 +172,12 @@
           <wheel_radius>${0.152/2.0}</wheel_radius>
           <odom_publish_frequency>50</odom_publish_frequency>
 
+          <!-- Limits -->
+          <max_linear_acceleration> 1.0</max_linear_acceleration>
+          <min_linear_acceleration>-1.0</min_linear_acceleration>
+          <max_angular_acceleration> 1.0</max_angular_acceleration>
+          <min_angular_acceleration>-1.0</min_angular_acceleration>
+
           <!-- Output -->
           <frame_id>odom</frame_id>
           <child_frame_id>base_footprint</child_frame_id>
