@@ -69,31 +69,12 @@ def generate_launch_description():
             on_exit=[robot_controller_spawner]
         )
     )
-
-    cmd_vel_relay_target = PythonExpression(
-        ['"/diff_drive_controller/cmd_vel_unstamped" if "true" == "',
-            use_ros2_control, '" else "/vmegarover/cmd_vel"']
-    )
-    cmd_vel_relay = Node(package='topic_tools', executable='relay', name='cmd_vel_relay', output='screen',
-                         parameters=[{'input_topic': '/cmd_vel',
-                                      'output_topic': cmd_vel_relay_target}])
-    odom_relay_target = PythonExpression(
-        ['"/diff_drive_controller/odom" if "true" == "',
-            use_ros2_control, '" else "/vmegarover/odom"']
-    )
-    odom_relay = Node(package='topic_tools', executable='relay', name='odom_relay', output='screen',
-                      parameters=[{'input_topic': odom_relay_target,
-                                   'output_topic': '/odom'}])
-
     return LaunchDescription([
         declare_use_sim_time,
         declare_use_ros2_control,
 
         robot_state_publisher,
         joint_state_publisher,
-        cmd_vel_relay,
-        odom_relay,
-
         # execute if use_ros2_control is true
         joint_state_broadcaster_spawner,
         delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,

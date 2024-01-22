@@ -29,7 +29,6 @@ def generate_launch_description():
     pkg_megarover_samples_ros2 = get_package_share_directory(
         'megarover_samples_ros2')
     launch_file_dir = os.path.join(pkg_megarover_samples_ros2, 'launch')
-    scripts_file_dir = os.path.join(pkg_megarover_samples_ros2, 'scripts')
 
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
 
@@ -43,22 +42,6 @@ def generate_launch_description():
         }.items(),
     )
 
-    # xacro_file = os.path.join(
-    #     pkg_megarover_samples_ros2, 'robots', 'vmegarover.urdf.xacro')
-    create_fix_urdf = ExecuteProcess(
-        # python3 [pkg]/create_fix_urdf.py (true|false)
-        cmd=[[
-            FindExecutable(name='python3'),
-            ' ',
-            scripts_file_dir+'/create_fix_urdf.py',
-            ' ',
-            use_ros2_control
-        ]],
-        shell=True
-    )
-    # generate by `create_fix_urdf`
-    urdf_file = os.path.join(pkg_megarover_samples_ros2,
-                             'robots', 'vmegarover.urdf')
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
@@ -69,15 +52,8 @@ def generate_launch_description():
                 '-x', '0',
                 '-y', '0',
                 '-z', '1',
-                '-file', urdf_file,
+                '-topic', 'robot_description',
         ]
-    )
-    # Delay start of spawn_entity after `create_fix_urdf`
-    delay_spawn_entity_after_create_fix_urdf = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=create_fix_urdf,
-            on_exit=[spawn_entity]
-        )
     )
 
     # use diff_drive_controller on ros2_control
@@ -93,7 +69,6 @@ def generate_launch_description():
         declare_world_fname,
         declare_gui,
         gazebo,
-        create_fix_urdf,
-        delay_spawn_entity_after_create_fix_urdf,       # execute spawn_entity
+        spawn_entity,
         robot_state_publisher_on_ros2_control_launch,
     ])

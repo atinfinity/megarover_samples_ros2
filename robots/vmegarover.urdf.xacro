@@ -94,6 +94,10 @@
       </ros2_control>
       <gazebo>
         <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+          <ros>
+            <remapping>~/cmd_vel_unstamped:=/cmd_vel</remapping>
+            <remapping>~/odom:=/odom</remapping>
+          </ros>
           <parameters>$(find megarover_samples_ros2)/config/diff_drive_controller.yaml</parameters>
         </plugin>
       </gazebo>
@@ -104,7 +108,7 @@
       <gazebo>
         <plugin name='diff_drive_controller' filename='libgazebo_ros_diff_drive.so'>
           <ros>
-            <namespace>/vmegarover</namespace>
+            <namespace>/</namespace>
           </ros>
           <update_rate>50</update_rate>
           <left_joint>left_wheel_joint</left_joint>
