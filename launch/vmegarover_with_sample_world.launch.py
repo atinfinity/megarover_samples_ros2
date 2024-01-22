@@ -3,7 +3,7 @@ from launch_ros.substitutions import FindPackageShare
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
-from launch.conditions import IfCondition
+from launch.conditions import IfCondition, LaunchConfigurationEquals
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 
@@ -49,7 +49,19 @@ def generate_launch_description():
         launch_arguments={
             'gui': gui,
             'world_fname': world_fname
-        }.items()
+        }.items(),
+        condition=LaunchConfigurationEquals("gazebo", "classic")
+    )
+    # setup ignition gazebo
+    ignition_gazebo_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([launch_file_dir, 'utils', 'ignition_gazebo.launch.py'])
+        ),
+        launch_arguments={
+            'gui': gui,
+            'world_fname': ''
+        }.items(),
+        condition=LaunchConfigurationEquals("gazebo", "ignition")
     )
     # setup robot_description
     robot_description_launch = IncludeLaunchDescription(
@@ -78,6 +90,8 @@ def generate_launch_description():
         declare_world_fname,
 
         classic_gazebo_launch,
+        ignition_gazebo_launch,
+
         robot_description_launch,
         ros2_control_launch
     ])
