@@ -39,40 +39,22 @@ def generate_launch_description():
     gazebo_simulator = LaunchConfiguration('gazebo')
     world_fname = LaunchConfiguration('world_fname')
 
-    pkg_megarover_samples_ros2 = FindPackageShare('megarover_samples_ros2')
-    launch_file_dir = PathJoinSubstitution([pkg_megarover_samples_ros2, 'launch'])
+    launch_file_dir = PathJoinSubstitution([FindPackageShare('megarover_samples_ros2'), 'launch'])
 
-    gazebo = IncludeLaunchDescription(
+    # setup classic gazebo
+    classic_gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            PathJoinSubstitution([
-                FindPackageShare('gazebo_ros'),
-                'launch', 'gazebo.launch.py'
-            ])
+            PathJoinSubstitution([launch_file_dir, 'utils', 'classic_gazebo.launch.py'])
         ),
         launch_arguments={
-            'world': world_fname,
-            'gui': gui
-        }.items(),
+            'gui': gui,
+            'world_fname': world_fname
+        }.items()
     )
-
-    spawn_entity = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        name='spawn_entity',
-        output='screen',
-        arguments=[
-                '-entity', 'vmegarover',
-                '-x', '0',
-                '-y', '0',
-                '-z', '1',
-                '-topic', 'robot_description',
-        ]
-    )
-
     # setup robot_description
     robot_description_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            PathJoinSubstitution([launch_file_dir, 'robot_description.launch.py'])
+            PathJoinSubstitution([launch_file_dir, 'utils', 'robot_description.launch.py'])
         ),
         launch_arguments={
             'use_sim_time': use_sim_time,
@@ -80,11 +62,10 @@ def generate_launch_description():
             'gazebo': gazebo_simulator
         }.items()
     )
-
     # setup ros2_control
     ros2_control_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            PathJoinSubstitution([launch_file_dir, 'ros2_control.launch.py'])
+            PathJoinSubstitution([launch_file_dir, 'utils', 'ros2_control.launch.py'])
         ),
         condition=IfCondition(use_ros2_control)
     )
@@ -96,9 +77,7 @@ def generate_launch_description():
         declare_gazebo,
         declare_world_fname,
 
-        gazebo,
-        spawn_entity,
-
+        classic_gazebo_launch,
         robot_description_launch,
         ros2_control_launch
     ])
