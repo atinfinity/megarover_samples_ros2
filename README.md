@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a ROS2 Package to develop package of megarover using Gazebo.  
+This is a ROS2 Package to develop package of megarover using Gazebo.
 I used model, mesh and world files of <https://github.com/vstoneofficial/megarover_samples> as a reference.
 
 If you use ROS2 Galactic, please check [galactic](https://github.com/atinfinity/megarover_samples_ros2/tree/galactic) branch.
@@ -10,6 +10,7 @@ If you use ROS2 Galactic, please check [galactic](https://github.com/atinfinity/
 ## Requirements
 
 - ROS2 Humble
+- Classic Gazebo or Gazebo Fortress
 
 And, I have tested with [eProsima Fast DDS](https://www.eprosima.com/index.php/products-all/eprosima-fast-dds) as RMW implementation.
 
@@ -39,13 +40,21 @@ $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 
 NOTE (humble only):
 
-In **humble**, gazebo_ros2_control can be activated. If you want to do activation with gazebo_ros2_control, add the option `use_ros2_control:=true`
-
-However, at this time, **gazebo_ros2_control is still under development and unstable**.
+In **humble**, gazebo_ros2_control can be activated. If you want to do activation with gazebo_ros2_control, add the option `use_ros2_control:=true`.
+However, at this time, **gazebo_ros2_control and is still under development and unstable**.
 
 ```
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py use_ros2_control:=true
 ```
+
+In addition, with `gazebo:=ignition` option, it is possible to start with an Ignition Gazebo.
+
+```
+$ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py gazebo:=ignition use_ros2_control:=true
+```
+
+![](images/ignition_gazebo.png)
+
 
 ### Launch Slam Toolbox for Mapping
 
