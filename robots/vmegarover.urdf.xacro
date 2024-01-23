@@ -212,6 +212,11 @@
           <odom_topic>/odom</odom_topic>
           <tf_topic>/tf</tf_topic>
         </plugin>
+        <plugin
+          filename="ignition-gazebo-joint-state-publisher-system"
+          name="ignition::gazebo::systems::JointStatePublisher">
+            <topic>/joint_states</topic>
+        </plugin>
       </gazebo>
     </xacro:unless>
   </xacro:if>
