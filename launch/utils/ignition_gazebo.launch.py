@@ -83,17 +83,50 @@ def generate_launch_description():
             "/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock",
             "/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
-            "/odom@nav_msgs/msg/Odometry[ignition.msgs.Odometry",
+            # ros <-> ignition sync : cmd_vel, odom
+            "/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist",
+            "/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry",
+        ]
+    )
+    scan_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        name='scan_bridge',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time
+        }],
+        arguments=[
             "/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan",
+        ]
+    )
+    image_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        name='image_bridge',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time
+        }],
+        arguments=[
             "/front_camera_sensor/depth_image@sensor_msgs/msg/Image[gz.msgs.Image",
             "/front_camera_sensor/image@sensor_msgs/msg/Image[gz.msgs.Image",
-            "/front_camera_sensor/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
-            # ros <-> ignition sync : cmd_vel
-            "/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist",
         ],
         remappings=[
             ("/front_camera_sensor/depth_image", "/front_camera_sensor/depth/image_raw"),
             ("/front_camera_sensor/image", "/front_camera_sensor/image_raw"),
+        ]
+    )
+    points_bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        name='points_bridge',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time
+        }],
+        arguments=[
+            "/front_camera_sensor/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ]
     )
     rgb_camera_info_bridge = Node(
@@ -133,7 +166,12 @@ def generate_launch_description():
 
         gazebo,
         spawn_entity,
+
+        # bridges
         base_topic_bridge,
+        scan_bridge,
+        image_bridge,
+        points_bridge,
         rgb_camera_info_bridge,
         depth_camera_info_bridge
     ])
