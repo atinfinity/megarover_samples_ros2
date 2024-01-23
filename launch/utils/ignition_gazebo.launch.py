@@ -1,11 +1,14 @@
+from os import pathsep
+
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
-from launch.conditions import IfCondition
+from launch.actions import (DeclareLaunchArgument, IncludeLaunchDescription,
+                            SetEnvironmentVariable)
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.substitutions import (EnvironmentVariable, LaunchConfiguration,
+                                  PathJoinSubstitution, PythonExpression)
 
 
 def generate_launch_description():
@@ -18,13 +21,29 @@ def generate_launch_description():
         description='Set to "false" to run headless.')
     declare_world_fname = DeclareLaunchArgument(
         'world_fname', default_value='',
-        description='gazebo world file name')
+        description='gazebo world name (no extension)')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     gui = LaunchConfiguration('gui')
     world_fname = LaunchConfiguration('world_fname')
 
     pkg_megarover_samples_ros2 = FindPackageShare('megarover_samples_ros2')
+
+    set_env_gazebo_resource = SetEnvironmentVariable(
+        name='IGN_GAZEBO_RESOURCE_PATH',
+        value=[
+            EnvironmentVariable('IGN_GAZEBO_RESOURCE_PATH', default_value=''),
+            pathsep,
+            PathJoinSubstitution([pkg_megarover_samples_ros2, 'worlds', 'ignition'])]
+    )
+
+    gz_args = [world_fname, '.sdf', ' ',
+               # log level : 1
+               '-v 1', ' ',
+               # autostart
+               '-r', ' ',
+               # headless
+               __headless_rendering(gui)]
 
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -34,8 +53,7 @@ def generate_launch_description():
             ])
         ),
         launch_arguments={
-            'gz_args': [' -r -v 1 ', world_fname]  # headless : --headless-rendering
-            # 'gz_args': [' -r -v 1 empty.sdf']  # headless : --headless-rendering
+            'gz_args': gz_args
         }.items(),
     )
 
@@ -47,7 +65,7 @@ def generate_launch_description():
                 '-entity', 'vmegarover',
                 '-x', '0',
                 '-y', '0',
-                '-z', '1',
+                '-z', '0.3',
                 '-topic', 'robot_description',
         ]
     )
@@ -111,9 +129,16 @@ def generate_launch_description():
         declare_gui,
         declare_world_fname,
 
+        set_env_gazebo_resource,
+
         gazebo,
         spawn_entity,
         base_topic_bridge,
         rgb_camera_info_bridge,
         depth_camera_info_bridge
     ])
+
+def __headless_rendering(gui):
+    cmd = ['"" if "true" == "', gui, '" else "--headless-rendering -s"']
+    py_cmd = PythonExpression(cmd)
+    return py_cmd

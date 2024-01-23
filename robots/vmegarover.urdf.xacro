@@ -198,10 +198,10 @@
           <odom_publish_frequency>50</odom_publish_frequency>
 
           <!-- Limits -->
-          <max_linear_acceleration> 1.0</max_linear_acceleration>
-          <min_linear_acceleration>-1.0</min_linear_acceleration>
-          <max_angular_acceleration> 1.0</max_angular_acceleration>
-          <min_angular_acceleration>-1.0</min_angular_acceleration>
+          <!-- <max_linear_acceleration> 1.0</max_linear_acceleration> -->
+          <!-- <min_linear_acceleration>-1.0</min_linear_acceleration> -->
+          <!-- <max_angular_acceleration> 1.0</max_angular_acceleration> -->
+          <!-- <min_angular_acceleration>-1.0</min_angular_acceleration> -->
 
           <!-- Output -->
           <frame_id>odom</frame_id>
@@ -210,7 +210,7 @@
           <!-- Topics -->
           <topic>/cmd_vel</topic>
           <odom_topic>/odom</odom_topic>
-          <!-- <tf_topic>/tf_gazebo</tf_topic> -->
+          <tf_topic>/tf</tf_topic>
         </plugin>
       </gazebo>
     </xacro:unless>

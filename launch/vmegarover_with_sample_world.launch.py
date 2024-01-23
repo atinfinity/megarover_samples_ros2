@@ -8,11 +8,6 @@ from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 
 
 def generate_launch_description():
-    default_world_name = PathJoinSubstitution([
-        FindPackageShare('megarover_samples_ros2'),
-        'worlds', 'vmegarover_sample.world'
-    ])
-
     declare_use_sim_time = DeclareLaunchArgument(
         'use_sim_time', default_value='true',
         description='Use simulation (Gazebo) clock if true')
@@ -29,8 +24,8 @@ def generate_launch_description():
         choices=['classic', 'ignition'],
         description='Which gazebo simulator to use')
     declare_world_fname = DeclareLaunchArgument(
-        'world_fname', default_value=default_world_name,
-        description='gazebo world file name')
+        'world_fname', default_value='vmegarover_sample',
+        description='gazebo world name (no extension)')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     use_ros2_control = LaunchConfiguration('use_ros2_control')
