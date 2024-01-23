@@ -1,4 +1,3 @@
-from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 from launch import LaunchDescription
@@ -60,7 +59,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             'gui': gui,
-            'world_fname': ''
+            'world_fname': world_fname
         }.items(),
         condition=LaunchConfigurationEquals("gazebo", "ignition")
     )

@@ -34,8 +34,8 @@ def generate_launch_description():
             ])
         ),
         launch_arguments={
-            # 'gz_args': [' -r -v 4 ', world_fname]  # headless : --headless-rendering
-            'gz_args': [' -r -v 1 empty.sdf']  # headless : --headless-rendering
+            'gz_args': [' -r -v 1 ', world_fname]  # headless : --headless-rendering
+            # 'gz_args': [' -r -v 1 empty.sdf']  # headless : --headless-rendering
         }.items(),
     )
 
