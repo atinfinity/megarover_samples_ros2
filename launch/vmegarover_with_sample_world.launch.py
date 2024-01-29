@@ -1,99 +1,92 @@
-import os
+from launch_ros.substitutions import FindPackageShare
 
-from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, RegisterEventHandler, ExecuteProcess
-from launch.event_handlers import OnProcessExit
-from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.conditions import IfCondition, LaunchConfigurationEquals
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, FindExecutable
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 
 
 def generate_launch_description():
-    world_file_name = 'vmegarover_sample.world'
-    world = os.path.join(get_package_share_directory(
-        'megarover_samples_ros2'), 'worlds', world_file_name)
-
+    declare_use_sim_time = DeclareLaunchArgument(
+        'use_sim_time', default_value='true',
+        description='Use simulation (Gazebo) clock if true')
     declare_use_ros2_control = DeclareLaunchArgument(
-        'use_ros2_control', default_value='false', description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false. gazebo_ros2_control is under development and deprecated')
-    declare_world_fname = DeclareLaunchArgument(
-        'world_fname', default_value=world, description='absolute path of gazebo world file')
+        'use_ros2_control', default_value='false',
+        choices=['true', 'false'],
+        description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false.')
     declare_gui = DeclareLaunchArgument(
-        'gui', default_value='true', description='Set to "false" to run headless.')
+        'gui', default_value='true',
+        choices=['true', 'false'],
+        description='Set to "false" to run headless.')
+    declare_gazebo = DeclareLaunchArgument(
+        'gazebo', default_value='classic',
+        choices=['classic', 'ignition'],
+        description='Which gazebo simulator to use')
+    declare_world_fname = DeclareLaunchArgument(
+        'world_fname', default_value='vmegarover_sample',
+        description='gazebo world name (no extension)')
 
+    use_sim_time = LaunchConfiguration('use_sim_time')
+    use_ros2_control = LaunchConfiguration('use_ros2_control')
+    gui = LaunchConfiguration('gui')
+    gazebo_simulator = LaunchConfiguration('gazebo')
     world_fname = LaunchConfiguration('world_fname')
-    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
-    use_ros2_control = LaunchConfiguration('use_ros2_control', default='false')
-    gui = LaunchConfiguration('gui', default='true')
 
-    pkg_megarover_samples_ros2 = get_package_share_directory(
-        'megarover_samples_ros2')
-    launch_file_dir = os.path.join(pkg_megarover_samples_ros2, 'launch')
-    scripts_file_dir = os.path.join(pkg_megarover_samples_ros2, 'scripts')
+    launch_file_dir = PathJoinSubstitution([FindPackageShare('megarover_samples_ros2'), 'launch'])
 
-    pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
-
-    gazebo = IncludeLaunchDescription(
+    # setup classic gazebo
+    classic_gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_gazebo_ros, 'launch', 'gazebo.launch.py')
+            PathJoinSubstitution([launch_file_dir, 'utils', 'classic_gazebo.launch.py'])
         ),
         launch_arguments={
-            'world': world_fname,
-            'gui': gui
+            'use_sim_time': use_sim_time,
+            'gui': gui,
+            'world_fname': world_fname
         }.items(),
+        condition=LaunchConfigurationEquals("gazebo", "classic")
     )
-
-    # xacro_file = os.path.join(
-    #     pkg_megarover_samples_ros2, 'robots', 'vmegarover.urdf.xacro')
-    create_fix_urdf = ExecuteProcess(
-        # python3 [pkg]/create_fix_urdf.py (true|false)
-        cmd=[[
-            FindExecutable(name='python3'),
-            ' ',
-            scripts_file_dir+'/create_fix_urdf.py',
-            ' ',
-            use_ros2_control
-        ]],
-        shell=True
-    )
-    # generate by `create_fix_urdf`
-    urdf_file = os.path.join(pkg_megarover_samples_ros2,
-                             'robots', 'vmegarover.urdf')
-    spawn_entity = Node(
-        package='gazebo_ros',
-        executable='spawn_entity.py',
-        name='spawn_entity',
-        output='screen',
-        arguments=[
-                '-entity', 'vmegarover',
-                '-x', '0',
-                '-y', '0',
-                '-z', '1',
-                '-file', urdf_file,
-        ]
-    )
-    # Delay start of spawn_entity after `create_fix_urdf`
-    delay_spawn_entity_after_create_fix_urdf = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=create_fix_urdf,
-            on_exit=[spawn_entity]
-        )
-    )
-
-    # use diff_drive_controller on ros2_control
-    robot_state_publisher_on_ros2_control_launch = IncludeLaunchDescription(
+    # setup ignition gazebo
+    ignition_gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            [launch_file_dir, '/robot_state_publisher.launch.py']),
-        launch_arguments={'use_sim_time': use_sim_time,
-                          'use_ros2_control': use_ros2_control}.items(),
+            PathJoinSubstitution([launch_file_dir, 'utils', 'ignition_gazebo.launch.py'])
+        ),
+        launch_arguments={
+            'gui': gui,
+            'world_fname': world_fname
+        }.items(),
+        condition=LaunchConfigurationEquals("gazebo", "ignition")
+    )
+    # setup robot_description
+    robot_description_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([launch_file_dir, 'utils', 'robot_description.launch.py'])
+        ),
+        launch_arguments={
+            'use_sim_time': use_sim_time,
+            'use_ros2_control': use_ros2_control,
+            'gazebo': gazebo_simulator
+        }.items()
+    )
+    # setup ros2_control
+    ros2_control_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution([launch_file_dir, 'utils', 'ros2_control.launch.py'])
+        ),
+        condition=IfCondition(use_ros2_control)
     )
 
     return LaunchDescription([
+        declare_use_sim_time,
         declare_use_ros2_control,
-        declare_world_fname,
         declare_gui,
-        gazebo,
-        create_fix_urdf,
-        delay_spawn_entity_after_create_fix_urdf,       # execute spawn_entity
-        robot_state_publisher_on_ros2_control_launch,
+        declare_gazebo,
+        declare_world_fname,
+
+        classic_gazebo_launch,
+        ignition_gazebo_launch,
+
+        robot_description_launch,
+        ros2_control_launch
     ])

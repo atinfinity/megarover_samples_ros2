@@ -13,12 +13,12 @@
     <link name="base_link">
       <visual>
         <geometry>
-          <mesh filename="package://megarover_samples_ros2/models/vmegarover/meshes/dae/vmega_body.dae"/>
+          <mesh filename="file://$(find megarover_samples_ros2)/models/vmegarover/meshes/dae/vmega_body.dae"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://megarover_samples_ros2/models/vmegarover/meshes/stl/vmega_body.stl"/>
+          <mesh filename="file://$(find megarover_samples_ros2)/models/vmegarover/meshes/stl/vmega_body.stl"/>
         </geometry>
       </collision>
       <inertial>

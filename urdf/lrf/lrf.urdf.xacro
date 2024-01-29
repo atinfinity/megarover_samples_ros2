@@ -15,12 +15,12 @@
     <link name="${prefix}_lrf_link">
       <visual>
         <geometry>
-          <mesh filename="package://megarover_samples_ros2/models/vmegarover/meshes/dae/lrf.dae"/>
+          <mesh filename="file://$(find megarover_samples_ros2)/models/vmegarover/meshes/dae/lrf.dae"/>
         </geometry>
       </visual>
       <collision>
         <geometry>
-          <mesh filename="package://megarover_samples_ros2/models/vmegarover/meshes/stl/lrf.stl"/>
+          <mesh filename="file://$(find megarover_samples_ros2)/models/vmegarover/meshes/stl/lrf.stl"/>
         </geometry>
       </collision>
       <inertial>
