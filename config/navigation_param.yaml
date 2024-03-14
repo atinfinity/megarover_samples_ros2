@@ -31,7 +31,7 @@ amcl:
     set_initial_pose: true
     sigma_hit: 0.2
     tf_broadcast: true
-    transform_tolerance: 2.0
+    transform_tolerance: 1.0
     update_min_a: 0.2
     update_min_d: 0.25
     z_hit: 0.5
