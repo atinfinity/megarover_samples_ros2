@@ -12,7 +12,13 @@ If you use ROS2 Galactic, please check [galactic](https://github.com/atinfinity/
 - ROS2 Humble
 - Classic Gazebo or Gazebo Fortress
 
-And, I have tested with [eProsima Fast DDS](https://www.eprosima.com/index.php/products-all/eprosima-fast-dds) as RMW implementation.
+And, I have tested with [Eclipse Cyclone DDS](https://github.com/eclipse-cyclonedds/cyclonedds) as RMW implementation.
+If you use this RMW implementation, please install according to the following command.
+
+```
+$ sudo apt install ros-humble-rmw-cyclonedds-cpp
+$ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+```
 
 ## Build
 
