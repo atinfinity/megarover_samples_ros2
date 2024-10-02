@@ -28,16 +28,17 @@ def generate_launch_description():
     world_fname = LaunchConfiguration('world_fname')
 
     pkg_megarover_samples_ros2 = FindPackageShare('megarover_samples_ros2')
+    worlds_dir = PathJoinSubstitution([pkg_megarover_samples_ros2, 'worlds', 'ignition'])
 
     set_env_gazebo_resource = SetEnvironmentVariable(
         name='IGN_GAZEBO_RESOURCE_PATH',
         value=[
             EnvironmentVariable('IGN_GAZEBO_RESOURCE_PATH', default_value=''),
             pathsep,
-            PathJoinSubstitution([pkg_megarover_samples_ros2, 'worlds', 'ignition'])]
+            worlds_dir]
     )
 
-    gz_args = [world_fname, '.sdf', ' ',
+    gz_args = [worlds_dir, '/', world_fname, '.sdf', ' ',
                # log level : 1
                '-v 1', ' ',
                # autostart
