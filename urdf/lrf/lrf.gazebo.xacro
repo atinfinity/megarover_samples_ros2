@@ -3,35 +3,33 @@
 
   <xacro:macro name="lrf_gazebo_v0" params="gazebo prefix min_rad max_rad min_range max_range">
     <gazebo reference="${prefix}_lrf_link">
-      <xacro:if value="${gazebo == 'ignition'}">
-        <sensor type="gpu_lidar" name="${prefix}_lrf_sensor">
-          <pose>0 0 0 0 0 0</pose>
-          <topic>scan</topic>
-          <visualize>false</visualize>
-          <update_rate>40</update_rate>
-          <gz_frame_id>${prefix}_lrf_link</gz_frame_id>
-          <lidar>
-            <scan>
-              <horizontal>
-                <samples>1000</samples>
-                <resolution>1</resolution>
-                <min_angle>${min_rad}</min_angle>
-                <max_angle>${max_rad}</max_angle>
-              </horizontal>
-            </scan>
-            <range>
-              <min>${min_range}</min>
-              <max>${max_range}</max>
-              <resolution>0.001</resolution>
-            </range>
-            <noise>
-              <type>gaussian</type>
-              <mean>0.0</mean>
-              <stddev>0.03</stddev>
-            </noise>
-          </lidar>
-        </sensor>
-      </xacro:if>
+      <sensor type="gpu_lidar" name="${prefix}_lrf_sensor">
+        <pose>0 0 0 0 0 0</pose>
+        <topic>scan</topic>
+        <visualize>false</visualize>
+        <update_rate>40</update_rate>
+        <gz_frame_id>${prefix}_lrf_link</gz_frame_id>
+        <lidar>
+          <scan>
+            <horizontal>
+              <samples>1000</samples>
+              <resolution>1</resolution>
+              <min_angle>${min_rad}</min_angle>
+              <max_angle>${max_rad}</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>${min_range}</min>
+            <max>${max_range}</max>
+            <resolution>0.001</resolution>
+          </range>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.03</stddev>
+          </noise>
+        </lidar>
+      </sensor>
     </gazebo>
   </xacro:macro>
 </robot>

@@ -2,32 +2,30 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:macro name="camera_gazebo_v0" params="gazebo prefix">
     <gazebo reference="${prefix}_camera_link">
-      <xacro:if value="${gazebo == 'ignition'}">
-        <sensor name="${prefix}_camera_sensor" type="rgbd_camera">
-          <pose>0 0 0 0 0 0</pose>
-          <topic>${prefix}_camera_sensor</topic>
-          <update_rate>30.0</update_rate>
-          <gz_frame_id>${prefix}_camera_link</gz_frame_id>
-          <camera>
-            <horizontal_fov>1.56207</horizontal_fov>
-            <image>
-              <width>640</width>
-              <height>400</height>
-              <format>R8G8B8</format>
-            </image>
-            <clip>
-              <near>0.02</near>
-              <far>8.0</far>
-            </clip>
-            <optical_frame_id>camera_depth_link</optical_frame_id>
-            <noise>
-              <type>gaussian</type>
-              <mean>0.0</mean>
-              <stddev>0.007</stddev>
-            </noise>
-          </camera>
-        </sensor>
-      </xacro:if>
+      <sensor name="${prefix}_camera_sensor" type="rgbd_camera">
+        <pose>0 0 0 0 0 0</pose>
+        <topic>${prefix}_camera_sensor</topic>
+        <update_rate>30.0</update_rate>
+        <gz_frame_id>${prefix}_camera_link</gz_frame_id>
+        <camera>
+          <horizontal_fov>1.56207</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>400</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>8.0</far>
+          </clip>
+          <optical_frame_id>camera_depth_link</optical_frame_id>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.007</stddev>
+          </noise>
+        </camera>
+      </sensor>
     </gazebo>
   </xacro:macro>
 </robot>
