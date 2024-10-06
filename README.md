@@ -42,7 +42,7 @@ If you use headless mode, add the option `gui:=false`.
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
 
-![](images/gazebo.png)
+![](images/ignition_gazebo.png)
 
 NOTE (humble only):
 
@@ -52,9 +52,6 @@ However, at this time, **gazebo_ros2_control and is still under development and 
 ```
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py use_ros2_control:=true
 ```
-
-![](images/ignition_gazebo.png)
-
 
 ### Launch Slam Toolbox for Mapping
 
