@@ -9,8 +9,8 @@ If you use ROS2 Galactic, please check [galactic](https://github.com/atinfinity/
 
 ## Requirements
 
-- ROS2 Humble
-- Classic Gazebo or Gazebo Fortress
+- ROS2 Jazzy
+- Gazebo Harmonic
 
 And, I have tested with [Eclipse Cyclone DDS](https://github.com/eclipse-cyclonedds/cyclonedds) as RMW implementation.
 If you use this RMW implementation, please install according to the following command.
@@ -51,12 +51,6 @@ However, at this time, **gazebo_ros2_control and is still under development and 
 
 ```
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py use_ros2_control:=true
-```
-
-In addition, with `gazebo:=ignition` option, it is possible to start with an Ignition Gazebo.
-
-```
-$ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py gazebo:=ignition use_ros2_control:=true
 ```
 
 ![](images/ignition_gazebo.png)
