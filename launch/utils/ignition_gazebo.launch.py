@@ -31,9 +31,9 @@ def generate_launch_description():
     worlds_dir = PathJoinSubstitution([pkg_megarover_samples_ros2, 'worlds', 'ignition'])
 
     set_env_gazebo_resource = SetEnvironmentVariable(
-        name='IGN_GAZEBO_RESOURCE_PATH',
+        name='GZ_SIM_RESOURCE_PATH',
         value=[
-            EnvironmentVariable('IGN_GAZEBO_RESOURCE_PATH', default_value=''),
+            EnvironmentVariable('GZ_SIM_RESOURCE_PATH', default_value=''),
             pathsep,
             worlds_dir]
     )
