@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="vmegarover" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:arg name="gazebo" default="classic" />
+  <xacro:arg name="gazebo" default="ignition" />
   <xacro:arg name="use_ros2_control" default="false" />
 
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/body/vbody.urdf.xacro"/>
@@ -66,70 +66,6 @@
     <parent link="camera_link"/>
     <child link="camera_depth_link"/>
   </joint>
-
-  <!-- =============== Gazebo =============== -->
-  <xacro:if value="${'$(arg gazebo)' == 'classic'}">
-    <xacro:if value="$(arg use_ros2_control)">
-      <!-- use ros2_control -->
-      <ros2_control name="GazeboSystem" type="system">
-        <hardware>
-          <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-        </hardware>
-        <joint name="left_wheel_joint">
-          <command_interface name="velocity">
-            <param name="min">-1</param>
-            <param name="max">1</param>
-          </command_interface>
-          <state_interface name="position"/>
-          <state_interface name="velocity"/>
-        </joint>
-        <joint name="right_wheel_joint">
-          <command_interface name="velocity">
-            <param name="min">-1</param>
-            <param name="max">1</param>
-          </command_interface>
-          <state_interface name="position"/>
-          <state_interface name="velocity"/>
-        </joint>
-      </ros2_control>
-      <gazebo>
-        <plugin
-          filename="libgazebo_ros2_control.so"
-          name="gazebo_ros2_control">
-          <ros>
-            <remapping>~/cmd_vel_unstamped:=/cmd_vel</remapping>
-            <remapping>~/odom:=/odom</remapping>
-          </ros>
-          <parameters>$(find megarover_samples_ros2)/config/diff_drive_controller.yaml</parameters>
-        </plugin>
-      </gazebo>
-    </xacro:if>
-
-    <xacro:unless value="$(arg use_ros2_control)">
-      <!-- use libgazebo_ros_diff_drive.so -->
-      <gazebo>
-        <plugin
-          filename="libgazebo_ros_diff_drive.so"
-          name="diff_drive_controller">
-          <ros>
-            <namespace>/</namespace>
-          </ros>
-          <update_rate>50</update_rate>
-          <left_joint>left_wheel_joint</left_joint>
-          <right_joint>right_wheel_joint</right_joint>
-
-          <wheel_separation>0.284</wheel_separation>
-          <wheel_diameter>0.152</wheel_diameter>
-
-          <publish_odom>true</publish_odom>
-          <publish_odom_tf>true</publish_odom_tf>
-
-          <odometry_frame>odom</odometry_frame>
-          <robot_base_frame>base_footprint</robot_base_frame>
-        </plugin>
-      </gazebo>
-    </xacro:unless>
-  </xacro:if>
 
   <xacro:if value="${'$(arg gazebo)' == 'ignition'}">
     <xacro:if value="$(arg use_ros2_control)">

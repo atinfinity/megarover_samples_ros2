@@ -81,12 +81,12 @@ def generate_launch_description():
         }],
         arguments=[
             # ros <-  ignitoin sync : clock, tf(odom to base_footprinf), odom, scan, depth_image, image, points
-            "/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock",
-            "/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V",
+            "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
+            "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             # ros <-> ignition sync : cmd_vel, odom
-            "/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist",
-            "/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry",
+            "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
+            "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
         ]
     )
     scan_bridge = Node(

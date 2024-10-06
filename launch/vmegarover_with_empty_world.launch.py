@@ -21,8 +21,8 @@ def generate_launch_description():
         choices=['true', 'false'],
         description='Set to "false" to run headless.')
     declare_gazebo = DeclareLaunchArgument(
-        'gazebo', default_value='classic',
-        choices=['classic', 'ignition'],
+        'gazebo', default_value='ignition',
+        choices=['ignition'],
         description='Which gazebo simulator to use')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -32,17 +32,6 @@ def generate_launch_description():
 
     launch_file_dir = PathJoinSubstitution([FindPackageShare('megarover_samples_ros2'), 'launch'])
 
-    # setup classic gazebo
-    classic_gazebo_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            PathJoinSubstitution([launch_file_dir, 'utils', 'classic_gazebo.launch.py'])
-        ),
-        launch_arguments={
-            'gui': gui,
-            'world_fname': ''
-        }.items(),
-        condition=LaunchConfigurationEquals("gazebo", "classic")
-    )
     # setup ignition gazebo
     ignition_gazebo_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -80,7 +69,6 @@ def generate_launch_description():
         declare_gui,
         declare_gazebo,
 
-        classic_gazebo_launch,
         ignition_gazebo_launch,
 
         robot_description_launch,
