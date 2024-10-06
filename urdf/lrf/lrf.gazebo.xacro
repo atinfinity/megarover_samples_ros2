@@ -45,7 +45,7 @@
           <topic>scan</topic>
           <visualize>false</visualize>
           <update_rate>40</update_rate>
-          <ignition_frame_id>${prefix}_lrf_link</ignition_frame_id>
+          <gz_frame_id>${prefix}_lrf_link</gz_frame_id>
           <lidar>
             <scan>
               <horizontal>
