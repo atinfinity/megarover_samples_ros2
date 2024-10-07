@@ -51,7 +51,7 @@ def generate_launch_description():
         launch_arguments={
             'use_sim_time': use_sim_time,
             'gui': gui,
-            'world_fname': ''
+            'world_fname': 'empty'
         }.items(),
         condition=LaunchConfigurationEquals("gazebo", "ignition")
     )
