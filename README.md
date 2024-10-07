@@ -16,7 +16,7 @@ And, I have tested with [Eclipse Cyclone DDS](https://github.com/eclipse-cyclone
 If you use this RMW implementation, please install according to the following command.
 
 ```
-$ sudo apt install ros-humble-rmw-cyclonedds-cpp
+$ sudo apt install ros-jazzy-rmw-cyclonedds-cpp
 $ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 ```
 
