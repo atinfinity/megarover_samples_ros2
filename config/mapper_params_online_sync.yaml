@@ -1,6 +1,6 @@
 # Reference: https://github.com/SteveMacenski/slam_toolbox/blob/foxy-devel/config/mapper_params_online_async.yaml
 
-sync_slam_toolbox_node:
+slam_toolbox:
   ros__parameters:
 
     # Plugin params
