@@ -66,7 +66,7 @@ Visualization Manager:
       Selectable: true
       Size (Pixels): 3
       Size (m): 0.029999999329447746
-      Style: Spheres
+      Style: Points
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -191,7 +191,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: odom
+    Fixed Frame: map
     Frame Rate: 30
   Name: root
   Tools:
