@@ -28,7 +28,7 @@ def generate_launch_description():
     world_fname = LaunchConfiguration('world_fname')
 
     pkg_megarover_samples_ros2 = FindPackageShare('megarover_samples_ros2')
-    worlds_dir = PathJoinSubstitution([pkg_megarover_samples_ros2, 'worlds', 'ignition'])
+    worlds_dir = PathJoinSubstitution([pkg_megarover_samples_ros2, 'worlds', 'gz'])
 
     set_env_gazebo_resource = SetEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',
@@ -80,11 +80,11 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
-            # ros <-  ignitoin sync : clock, tf(odom to base_footprinf), odom, scan, depth_image, image, points
+            # ros <-  gz sync : clock, tf(odom to base_footprinf), odom, scan, depth_image, image, points
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
-            # ros <-> ignition sync : cmd_vel, odom
+            # ros <-> gz sync : cmd_vel, odom
             "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
         ]

@@ -16,8 +16,8 @@ def generate_launch_description():
         choices=['true', 'false'],
         description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false.')
     declare_gazebo = DeclareLaunchArgument(
-        'gazebo', default_value='ignition',
-        choices=['ignition'],
+        'gazebo', default_value='gz',
+        choices=['gz'],
         description='Which gazebo simulator to use')
 
     use_sim_time = LaunchConfiguration('use_sim_time')

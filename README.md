@@ -42,7 +42,7 @@ If you use headless mode, add the option `gui:=false`.
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
 
-![](images/ignition_gazebo.png)
+![](images/gazebo.png)
 
 NOTE (humble only):
 
@@ -63,6 +63,12 @@ $ ros2 launch megarover_samples_ros2 vmegarover_mapping.launch.py
 
 ```
 $ ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
+If you set `use_ros2_control:=true` in `vmegarover_with_sample_world.launch.py`, please run the following commmand(<https://github.com/ros-controls/ros2_controllers/pull/812>).
+
+```
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -p stamped:=true -r /cmd_vel:=/diff_drive_controller/cmd_vel
 ```
 
 ### Save Map
