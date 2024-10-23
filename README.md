@@ -25,7 +25,7 @@ $ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 ```
 $ mkdir -p ~/dev_ws/src
 $ cd ~/dev_ws/src
-$ git clone https://github.com/atinfinity/megarover_samples_ros2.git
+$ git clone https://github.com/atinfinity/megarover_samples_ros2.git -b prepare-jazzy
 $ cd ..
 $ rosdep install -y -i --from-paths src/megarover_samples_ros2
 $ colcon build --symlink-install
@@ -102,7 +102,7 @@ $ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/
 If you set `use_ros2_control:=true` in `vmegarover_with_sample_world.launch.py`, please run the following commmand(<https://github.com/ros-controls/ros2_controllers/pull/812>).
 
 ```
-$ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/maps/vmegarover_samplemap.yaml
+$ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py use_ros2_control:=true map:=$HOME/maps/vmegarover_samplemap.yaml
 ```
 
 ![](images/navigation.png)

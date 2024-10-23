@@ -85,34 +85,3 @@ def generate_launch_description():
     ld.add_action(cmd_vel_relay_cmd)
     ld.add_action(rviz2_cmd)
     return ld
-
-    """
-    return LaunchDescription([
-        DeclareLaunchArgument(
-            'map',
-            default_value=map_file,
-            description='Full path to map file to load'),
-
-        DeclareLaunchArgument(
-            'params',
-            default_value=param_file,
-            description='Full path to param file to load'),
-
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                [nav2_launch_file_dir, '/bringup_launch.py']),
-            launch_arguments={
-                'map': map_file,
-                'use_sim_time': use_sim_time,
-                'params_file': param_file}.items(),
-        ),
-
-        Node(
-            package='rviz2',
-            executable='rviz2',
-            name='rviz2',
-            arguments=['-d', rviz_config_file],
-            parameters=[{'use_sim_time': use_sim_time}],
-            output='screen'),
-    ])
-    """

@@ -188,6 +188,7 @@ def generate_launch_description():
         declare_use_sim_time,
         declare_gui,
         declare_world_fname,
+        declare_use_ros2_control,
 
         set_env_gazebo_resource,
 
