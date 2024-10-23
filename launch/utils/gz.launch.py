@@ -9,6 +9,7 @@ from launch.actions import (DeclareLaunchArgument, IncludeLaunchDescription,
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (EnvironmentVariable, LaunchConfiguration,
                                   PathJoinSubstitution, PythonExpression)
+from launch.conditions import IfCondition, UnlessCondition
 
 
 def generate_launch_description():
@@ -22,10 +23,15 @@ def generate_launch_description():
     declare_world_fname = DeclareLaunchArgument(
         'world_fname', default_value='',
         description='gazebo world name (no extension)')
+    declare_use_ros2_control = DeclareLaunchArgument(
+        'use_ros2_control', default_value='false',
+        choices=['true', 'false'],
+        description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false.')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     gui = LaunchConfiguration('gui')
     world_fname = LaunchConfiguration('world_fname')
+    use_ros2_control = LaunchConfiguration('use_ros2_control')
 
     pkg_megarover_samples_ros2 = FindPackageShare('megarover_samples_ros2')
     worlds_dir = PathJoinSubstitution([pkg_megarover_samples_ros2, 'worlds', 'gz'])
@@ -87,7 +93,27 @@ def generate_launch_description():
             # ros <-> gz sync : cmd_vel, odom
             "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
-        ]
+        ],
+        condition=UnlessCondition(use_ros2_control)
+    )
+    base_topic_bridge_ros2_control = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        name='base_topic_bridge_ros2_control',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time
+        }],
+        arguments=[
+            # ros <-  gz sync : clock, tf(odom to base_footprinf), odom, scan, depth_image, image, points
+            "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
+            "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
+            "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
+            # ros <-> gz sync : cmd_vel, odom
+            "/cmd_vel@geometry_msgs/msg/TwistStamped@gz.msgs.Twist",
+            "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
+        ],
+        condition=IfCondition(use_ros2_control)
     )
     scan_bridge = Node(
         package="ros_gz_bridge",
@@ -170,6 +196,7 @@ def generate_launch_description():
 
         # bridges
         base_topic_bridge,
+        base_topic_bridge_ros2_control,
         scan_bridge,
         image_bridge,
         points_bridge,

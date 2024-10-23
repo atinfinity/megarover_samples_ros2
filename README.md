@@ -44,10 +44,8 @@ $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 
 ![](images/gazebo.png)
 
-NOTE (humble only):
-
-In **humble**, gazebo_ros2_control can be activated. If you want to do activation with gazebo_ros2_control, add the option `use_ros2_control:=true`.
-However, at this time, **gazebo_ros2_control and is still under development and unstable**.
+> [!NOTE]
+> If you want to do activation with gazebo_ros2_control, add the option `use_ros2_control:=true`.
 
 ```
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py use_ros2_control:=true
@@ -88,7 +86,20 @@ If you use headless mode, add the option `gui:=false`.
 $ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
 
+> [!NOTE]
+> If you want to do activation with gazebo_ros2_control, add the option `use_ros2_control:=true`.
+
+```
+$ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py use_ros2_control:=true
+```
+
 ### Launch Navigation
+
+```
+$ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/maps/vmegarover_samplemap.yaml
+```
+
+If you set `use_ros2_control:=true` in `vmegarover_with_sample_world.launch.py`, please run the following commmand(<https://github.com/ros-controls/ros2_controllers/pull/812>).
 
 ```
 $ ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/maps/vmegarover_samplemap.yaml
