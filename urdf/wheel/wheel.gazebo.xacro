@@ -4,8 +4,10 @@
   <xacro:macro name="wheel_gazebo_v0" params="prefix">
     <gazebo reference="${prefix}_wheel_link">
       <selfCollide>false</selfCollide>
-      <mu1 value="1.0" />
-      <mu2 value="1.0" />
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>100.0</kd>
     </gazebo>
   </xacro:macro>
 </robot>

@@ -17,12 +17,12 @@
   <!-- Wheel -->
   <!-- Right Wheel -->
   <xacro:wheel_v0 prefix="right" parent="base_link">
-    <origin xyz="0 -0.14199 0.074742"/>
+    <origin xyz="0 -0.142 0.074742"/>
     <axis xyz="0 1 0"/>
   </xacro:wheel_v0>
   <!-- Left Wheel -->
   <xacro:wheel_v0 prefix="left" parent="base_link">
-    <origin xyz="0 0.14199 0.074742"  rpy="0 0 ${M_PI}" />
+    <origin xyz="0 0.142 0.074742" rpy="0 0 ${M_PI}" />
     <axis xyz="0 -1 0"/>
   </xacro:wheel_v0>
 
