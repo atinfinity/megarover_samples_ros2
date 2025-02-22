@@ -139,6 +139,23 @@
       </plugin>
     </gazebo>
   </xacro:unless>
+  <!-- Ground Truth Odometry -->
+  <gazebo>
+    <plugin
+      filename="gz-sim-odometry-publisher-system"
+      name="gz::sim::systems::OdometryPublisher">
+      <odom_topic>odom_truth</odom_topic>
+      <odom_frame>odom</odom_frame>
+      <odom_publish_frequency>50</odom_publish_frequency>
+      <robot_base_frame>base_footprint</robot_base_frame>
+
+      <!-- Ground Truth TF
+            When commenting in, disable TF on the diff drive controller.
+      -->
+      <!-- <publish_tf>true</publish_tf> -->
+      <!-- <tf_topic>/tf</tf_topic> -->
+    </plugin>
+  </gazebo>
 
   <!-- Base -->
   <xacro:base_gazebo_v0/>

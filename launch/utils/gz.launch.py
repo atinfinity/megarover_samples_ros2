@@ -93,6 +93,7 @@ def generate_launch_description():
             # ros <-> gz sync : cmd_vel, odom
             "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
+            "/odom_truth@nav_msgs/msg/Odometry@gz.msgs.Odometry",
         ],
         condition=UnlessCondition(use_ros2_control)
     )
@@ -112,6 +113,7 @@ def generate_launch_description():
             # ros <-> gz sync : cmd_vel, odom
             "/cmd_vel@geometry_msgs/msg/TwistStamped@gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
+            "/odom_truth@nav_msgs/msg/Odometry@gz.msgs.Odometry",
         ],
         condition=IfCondition(use_ros2_control)
     )
