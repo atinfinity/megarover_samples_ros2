@@ -5,9 +5,8 @@
   <xacro:include filename="$(find megarover_samples_ros2)/urdf/wheel/wheel.gazebo.xacro"/>
 
   <xacro:property name="wheel_radius" value="0.076"/>
-  <xacro:property name="wheel_inertial_length" value="0.03"/>
-  <xacro:property name="wheel_collition_length" value="0.001"/>
-  <xacro:property name="wheel_mass" value="2.5"/>
+  <xacro:property name="wheel_length" value="0.03"/>
+  <xacro:property name="wheel_mass" value="0.823"/>
 
 
   <xacro:macro name="wheel_v0" params="prefix parent *joint_origin *joint_axis">
@@ -27,13 +26,13 @@
       <collision>
         <origin xyz="0 0 0" rpy="${-M_PI/2} 0 0"/>
         <geometry>
-          <cylinder radius="${wheel_radius}" length="${wheel_collition_length}"/>
+          <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
         </geometry>
       </collision>
       <inertial>
         <origin xyz="0 0 0" rpy="${-M_PI/2} 0 0"/>
         <xacro:cylinder_inertial mass="${wheel_mass}"
-          radius="${wheel_radius}" length="${wheel_inertial_length}"/>
+          radius="${wheel_radius}" length="${wheel_length}"/>
       </inertial>
     </link>
   </xacro:macro>
