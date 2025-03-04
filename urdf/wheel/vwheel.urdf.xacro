@@ -22,8 +22,8 @@
         <xacro:if value="${prefix=='right'}">
           <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>
         </xacro:if>
-        <xacro:if value="${prefix=='right'}">
-          <origin xyz="0 0 0" rpy="${M_PI/2} 0 0"/>
+        <xacro:if value="${prefix=='left'}">
+          <origin xyz="0 0 0" rpy="-${M_PI/2} 0 0"/>
         </xacro:if>
         <geometry>
           <mesh filename="file://$(find megarover_samples_ros2)/models/vmegarover/meshes/dae/vmega_wheel.dae"/>
