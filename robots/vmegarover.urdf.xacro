@@ -17,13 +17,17 @@
   <!-- Wheel -->
   <!-- Right Wheel -->
   <xacro:wheel_v0 prefix="right" parent="base_link">
-    <origin xyz="0 -0.14199 0.074742"/>
-    <axis xyz="0 1 0"/>
+    <!-- Using M_PI causes an error in odometry. -->
+    <!-- <origin xyz="0 -0.142 0.074742" rpy="-${M_PI/2} 0 0"/> -->
+    <origin xyz="0 -0.142 0.074742" rpy="-1.57 0 0"/>
+    <axis xyz="0 0 1"/>
   </xacro:wheel_v0>
   <!-- Left Wheel -->
   <xacro:wheel_v0 prefix="left" parent="base_link">
-    <origin xyz="0 0.14199 0.074742"  rpy="0 0 ${M_PI}" />
-    <axis xyz="0 -1 0"/>
+    <!-- Using M_PI causes an error in odometry. -->
+    <!-- <origin xyz="0 0.142 0.074742" rpy="-${M_PI/2} 0 0"/> -->
+    <origin xyz="0 0.142 0.074742" rpy="-1.57 0 0"/>
+    <axis xyz="0 0 1"/>
   </xacro:wheel_v0>
 
   <!-- Front LRF -->
@@ -139,6 +143,23 @@
       </plugin>
     </gazebo>
   </xacro:unless>
+  <!-- Ground Truth Odometry -->
+  <gazebo>
+    <plugin
+      filename="gz-sim-odometry-publisher-system"
+      name="gz::sim::systems::OdometryPublisher">
+      <odom_topic>odom_truth</odom_topic>
+      <odom_frame>odom</odom_frame>
+      <odom_publish_frequency>50</odom_publish_frequency>
+      <robot_base_frame>base_footprint</robot_base_frame>
+
+      <!-- Ground Truth TF
+            When commenting in, disable TF on the diff drive controller.
+      -->
+      <!-- <publish_tf>true</publish_tf> -->
+      <!-- <tf_topic>/tf</tf_topic> -->
+    </plugin>
+  </gazebo>
 
   <!-- Base -->
   <xacro:base_gazebo_v0/>
