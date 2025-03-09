@@ -17,7 +17,7 @@
             <near>0.02</near>
             <far>8.0</far>
           </clip>
-          <!-- TODO XXX_camera_ooptical_link? -->
+          <!-- TODO XXX_camera_optical_link? -->
           <optical_frame_id>${prefix}_camera_link</optical_frame_id>
           <noise>
             <type>gaussian</type>
