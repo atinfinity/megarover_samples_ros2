@@ -23,7 +23,7 @@
               <stddev>0.007</stddev>
             </noise>
           </camera>
-          <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+          <plugin name="${prefix}_camera_controller" filename="libgazebo_ros_camera.so">
             <min_depth>0.2</min_depth>
             <max_depth>8.0</max_depth>
             <hack_baseline>0.07</hack_baseline>
