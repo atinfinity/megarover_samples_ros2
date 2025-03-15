@@ -42,30 +42,11 @@
     <origin xyz="-0.289 0 0.1015"  rpy="0 0 ${M_PI}" />
   </xacro:lrf_v0 -->
 
-  <link name="lrf_link"/>
-  <joint name="lrf_link_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="lrf_link"/>
-    <origin xyz="0.099 0 0.1015"/>
-  </joint>
-
+  <!-- Camera -->
+  <!-- Front Camera -->
   <xacro:camera_v0 prefix="front" parent="base_link">
     <origin xyz="0.099 0 0.2515"/>
   </xacro:camera_v0>
-
-  <!-- Front Camera -->
-  <link name="camera_link"/>
-  <joint name="camera_link_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="camera_link"/>
-    <origin xyz="0.099 0 0.3015"/>
-  </joint>
-  <link name="camera_depth_link"/>
-  <joint name="camera_depth_joint" type="fixed">
-    <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
-    <parent link="camera_link"/>
-    <child link="camera_depth_link"/>
-  </joint>
 
   <!-- =============== Gazebo =============== -->
   <xacro:if value="${'$(arg gazebo)' == 'classic'}">
