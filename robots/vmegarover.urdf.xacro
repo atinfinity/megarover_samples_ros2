@@ -39,14 +39,6 @@
     <origin xyz="-0.289 0 0.1015"  rpy="0 0 ${M_PI}" />
   </xacro:lrf_v0 -->
 
-  <link name="lrf_link"/>
-  <joint name="lrf_link_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="lrf_link"/>
-    <origin xyz="0.099 0 0.1015"/>
-  </joint>
-
-
   <!-- ===============  Transmission =============== -->
   <xacro:wheel_trans_v0 prefix="right"/>
   <xacro:wheel_trans_v0 prefix="left"/>
