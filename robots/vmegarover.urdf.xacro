@@ -214,7 +214,8 @@
                        min_rad="-3.14" max_rad="3.14"
                        min_range="0.06" max_range="10.0"/>
 
-  <!-- xacro:lrf_gazebo_v0 prefix="rear"
+  <!-- xacro:lrf_gazebo_v0 gazebo="$(arg gazebo)"
+                       prefix="rear"
                        min_rad="-1.57" max_rad="1.57"
                        min_range="0.06" max_range="10.0"/ -->
 
