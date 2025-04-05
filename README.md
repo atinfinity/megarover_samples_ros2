@@ -87,13 +87,13 @@ ros2 launch megarover_samples_ros2 vmegarover_save_map.launch.py
 
 If you use headless mode, add the option `gui:=false`.
 
-```
+```bash
 ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
 
 ### Launch Navigation
 
-```
+```bash
 ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/maps/vmegarover_samplemap.yaml
 ```
 
