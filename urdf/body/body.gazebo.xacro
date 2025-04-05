@@ -3,8 +3,10 @@
   <xacro:macro name="base_gazebo_v0">
     <gazebo reference="base_link">
       <selfCollide>false</selfCollide>
-      <mu1 value="0.0" />
-      <mu2 value="0.0" />
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+      <kp>100000.0</kp>
+      <kd>100.0</kd>
     </gazebo>
   </xacro:macro>
 </robot>
