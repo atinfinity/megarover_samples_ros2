@@ -23,14 +23,6 @@ find_package(sensor_msgs REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-add_executable(pub_odom src/pub_odom.cpp)
-#target_include_directories(pub_odom PUBLIC
-#  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#  $<INSTALL_INTERFACE:include>)
-
-install(TARGETS pub_odom
-  DESTINATION lib/${PROJECT_NAME})
-
 install(DIRECTORY config launch maps models robots rviz scripts urdf worlds
   DESTINATION share/${PROJECT_NAME})
 

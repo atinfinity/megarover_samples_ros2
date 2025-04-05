@@ -18,13 +18,17 @@
   <!-- Wheel -->
   <!-- Right Wheel -->
   <xacro:wheel_v0 prefix="right" parent="base_link">
-    <origin xyz="0 -0.14199 0.074742"/>
-    <axis xyz="0 1 0"/>
+    <!-- Using M_PI causes an error in odometry. -->
+    <!-- <origin xyz="0 -0.142 0.076" rpy="-${M_PI/2} 0 0"/> -->
+    <origin xyz="0 -0.142 0.076" rpy="-1.57 0 0"/>
+    <axis xyz="0 0 1"/>
   </xacro:wheel_v0>
   <!-- Left Wheel -->
   <xacro:wheel_v0 prefix="left" parent="base_link">
-    <origin xyz="0 0.14199 0.074742"  rpy="0 0 ${M_PI}" />
-    <axis xyz="0 -1 0"/>
+    <!-- Using M_PI causes an error in odometry. -->
+    <!-- <origin xyz="0 0.142 0.076" rpy="-${M_PI/2} 0 0"/> -->
+    <origin xyz="0 0.142 0.076" rpy="-1.57 0 0"/>
+    <axis xyz="0 0 1"/>
   </xacro:wheel_v0>
 
   <!-- Front LRF -->
@@ -174,14 +178,18 @@
           <left_joint>left_wheel_joint</left_joint>
           <right_joint>right_wheel_joint</right_joint>
           <wheel_separation>0.284</wheel_separation>
-          <wheel_radius>${0.152/2.0}</wheel_radius>
+          <wheel_radius>0.076</wheel_radius>
           <odom_publish_frequency>50</odom_publish_frequency>
 
           <!-- Limits -->
-          <!-- <max_linear_acceleration> 1.0</max_linear_acceleration> -->
-          <!-- <min_linear_acceleration>-1.0</min_linear_acceleration> -->
-          <!-- <max_angular_acceleration> 1.0</max_angular_acceleration> -->
-          <!-- <min_angular_acceleration>-1.0</min_angular_acceleration> -->
+          <max_linear_velocity>1.4</max_linear_velocity>
+          <min_linear_velocity>-1.4</min_linear_velocity>
+          <max_angular_velocity>3.0</max_angular_velocity>
+          <min_angular_velocity>-3.0</min_angular_velocity>
+          <max_linear_acceleration>2.0</max_linear_acceleration>
+          <min_linear_acceleration>-2.0</min_linear_acceleration>
+          <max_angular_acceleration>3.0</max_angular_acceleration>
+          <min_angular_acceleration>-3.0</min_angular_acceleration>
 
           <!-- Output -->
           <frame_id>odom</frame_id>

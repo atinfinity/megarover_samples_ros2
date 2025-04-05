@@ -2,14 +2,14 @@
 
 ## Introduction
 
-This is a ROS2 Package to develop package of megarover using Gazebo.
+This is a ROS 2 Package to develop package of megarover using Gazebo.
 I used model, mesh and world files of <https://github.com/vstoneofficial/megarover_samples> as a reference.
 
-If you use ROS2 Galactic, please check [galactic](https://github.com/atinfinity/megarover_samples_ros2/tree/galactic) branch.
+If you use ROS 2 Jazzy, please check [jazzy](https://github.com/atinfinity/megarover_samples_ros2/tree/jazzy) branch.
 
 ## Requirements
 
-- ROS2 Humble
+- ROS 2 Humble
 - Classic Gazebo or Gazebo Fortress
 
 And, I have tested with [Eclipse Cyclone DDS](https://github.com/eclipse-cyclonedds/cyclonedds) as RMW implementation.
@@ -87,13 +87,13 @@ ros2 launch megarover_samples_ros2 vmegarover_save_map.launch.py
 
 If you use headless mode, add the option `gui:=false`.
 
-```
+```bash
 ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 ```
 
 ### Launch Navigation
 
-```
+```bash
 ros2 launch megarover_samples_ros2 vmegarover_navigation.launch.py map:=$HOME/maps/vmegarover_samplemap.yaml
 ```
 
