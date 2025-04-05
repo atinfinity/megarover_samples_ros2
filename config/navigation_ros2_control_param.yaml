@@ -113,7 +113,7 @@ controller_server:
       wz_std: 0.4
       vx_max: 0.5
       vx_min: 0.0
-      vy_max: 0.5
+      vy_max: 0.0
       wz_max: 1.9
       iteration_count: 1
       prune_distance: 1.7
