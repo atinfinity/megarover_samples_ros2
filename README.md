@@ -2,30 +2,24 @@
 
 ## Introduction
 
-This is a ROS2 Package to develop package of megarover using Gazebo.
+This is a ROS 2 Package to develop package of megarover using Gazebo.
 I used model, mesh and world files of <https://github.com/vstoneofficial/megarover_samples> as a reference.
 
-If you use ROS2 Galactic, please check [galactic](https://github.com/atinfinity/megarover_samples_ros2/tree/galactic) branch.
+If you use ROS 2 Humble, please check [humble](https://github.com/atinfinity/megarover_samples_ros2/tree/humble) branch.
 
 ## Requirements
 
-- ROS2 Jazzy
+- ROS 2 Jazzy
 - Gazebo Harmonic
 
-And, I have tested with [Eclipse Cyclone DDS](https://github.com/eclipse-cyclonedds/cyclonedds) as RMW implementation.
-If you use this RMW implementation, please install according to the following command.
-
-```bash
-sudo apt install ros-jazzy-rmw-cyclonedds-cpp
-export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-```
+And, I have tested with [eProsima Fast DDS](https://github.com/eProsima/Fast-DDS) as RMW implementation.
 
 ## Build
 
 ```bash
 mkdir -p ~/dev_ws/src
 cd ~/dev_ws/src
-git clone https://github.com/atinfinity/megarover_samples_ros2.git -b prepare-jazzy
+git clone https://github.com/atinfinity/megarover_samples_ros2.git -b jazzy
 cd ..
 rosdep install -y -i --from-paths src/megarover_samples_ros2
 colcon build --symlink-install
