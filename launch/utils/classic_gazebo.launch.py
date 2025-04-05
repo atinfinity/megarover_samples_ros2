@@ -19,9 +19,14 @@ def generate_launch_description():
     declare_world_fname = DeclareLaunchArgument(
         'world_fname', default_value='',
         description='gazebo world name (no extension)')
+    declare_use_ros2_control = DeclareLaunchArgument(
+        'use_ros2_control', default_value='false',
+        choices=['true', 'false'],
+        description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false.')
 
     gui = LaunchConfiguration('gui')
     world_fname = LaunchConfiguration('world_fname')
+    use_ros2_control = LaunchConfiguration('use_ros2_control')
 
     pkg_megarover_samples_ros2 = FindPackageShare('megarover_samples_ros2')
 
@@ -68,6 +73,7 @@ def generate_launch_description():
     return LaunchDescription([
         declare_gui,
         declare_world_fname,
+        declare_use_ros2_control,
 
         set_env_gazebo_resource,
 

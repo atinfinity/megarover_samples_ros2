@@ -22,10 +22,15 @@ def generate_launch_description():
     declare_world_fname = DeclareLaunchArgument(
         'world_fname', default_value='',
         description='gazebo world name (no extension)')
+    declare_use_ros2_control = DeclareLaunchArgument(
+        'use_ros2_control', default_value='false',
+        choices=['true', 'false'],
+        description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false.')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     gui = LaunchConfiguration('gui')
     world_fname = LaunchConfiguration('world_fname')
+    use_ros2_control = LaunchConfiguration('use_ros2_control')
 
     pkg_megarover_samples_ros2 = FindPackageShare('megarover_samples_ros2')
 
@@ -86,7 +91,7 @@ def generate_launch_description():
             # ros <-> ignition sync : cmd_vel, odom
             "/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry",
-        ]
+        ],
     )
     scan_bridge = Node(
         package="ros_gz_bridge",
@@ -161,6 +166,7 @@ def generate_launch_description():
         declare_use_sim_time,
         declare_gui,
         declare_world_fname,
+        declare_use_ros2_control,
 
         set_env_gazebo_resource,
 
