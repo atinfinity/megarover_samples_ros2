@@ -107,14 +107,11 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
-            # ros <-  gz sync : clock, tf(odom to base_footprinf), odom, scan, depth_image, image, points
+            # GZ -> ROS
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
-            # ros <-> gz sync : cmd_vel, odom
-            "/cmd_vel@geometry_msgs/msg/TwistStamped@gz.msgs.Twist",
-            "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
-            "/odom_truth@nav_msgs/msg/Odometry@gz.msgs.Odometry",
+            "/odom_truth@nav_msgs/msg/Odometry[gz.msgs.Odometry",
         ],
         condition=IfCondition(use_ros2_control)
     )
@@ -127,6 +124,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # GZ -> ROS
             "/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan",
         ]
     )
@@ -139,6 +137,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # GZ -> ROS
             "/front_camera_sensor/depth_image@sensor_msgs/msg/Image[gz.msgs.Image",
             "/front_camera_sensor/image@sensor_msgs/msg/Image[gz.msgs.Image",
         ],
@@ -156,6 +155,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # GZ -> ROS
             "/front_camera_sensor/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ]
     )
@@ -168,6 +168,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # GZ -> ROS
             "/front_camera_sensor/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
         ],
     )
@@ -180,6 +181,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # GZ -> ROS
             "/front_camera_sensor/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
         ],
         remappings=[
