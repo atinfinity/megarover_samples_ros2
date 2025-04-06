@@ -110,7 +110,6 @@ def generate_launch_description():
             # GZ -> ROS
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
-            "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
             "/odom_truth@nav_msgs/msg/Odometry[gz.msgs.Odometry",
         ],
         condition=IfCondition(use_ros2_control)
