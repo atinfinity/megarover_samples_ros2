@@ -93,7 +93,7 @@ def generate_launch_description():
             "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
             "/odom_truth@nav_msgs/msg/Odometry[gz.msgs.Odometry",
 
-            # ROS -> ROS
+            # ROS -> GZ
             "/cmd_vel@geometry_msgs/msg/TwistStamped]gz.msgs.Twist",
         ],
         condition=UnlessCondition(use_ros2_control)
