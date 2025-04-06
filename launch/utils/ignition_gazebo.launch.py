@@ -94,6 +94,7 @@ def generate_launch_description():
             # ROS -> IGN
             "/cmd_vel@geometry_msgs/msg/Twist]ignition.msgs.Twist",
         ],
+        condition=UnlessCondition(use_ros2_control)
     )
     base_topic_bridge_ros2_control = Node(
         package="ros_gz_bridge",
@@ -107,7 +108,6 @@ def generate_launch_description():
             # IGN -> ROS
             "/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock",
             "/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V",
-            "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
         ],
         condition=IfCondition(use_ros2_control)
     )
@@ -123,8 +123,7 @@ def generate_launch_description():
         arguments=[
             # IGN -> ROS
             "/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan",
-        ],
-        condition=UnlessCondition(use_ros2_control)
+        ]
     )
     image_bridge = Node(
         package="ros_gz_bridge",
