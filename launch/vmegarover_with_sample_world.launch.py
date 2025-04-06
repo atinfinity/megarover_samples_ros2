@@ -41,7 +41,6 @@ def generate_launch_description():
             PathJoinSubstitution([launch_file_dir, 'utils', 'classic_gazebo.launch.py'])
         ),
         launch_arguments={
-            'use_sim_time': use_sim_time,
             'gui': gui,
             'world_fname': world_fname
         }.items(),
@@ -53,6 +52,8 @@ def generate_launch_description():
             PathJoinSubstitution([launch_file_dir, 'utils', 'ignition_gazebo.launch.py'])
         ),
         launch_arguments={
+            'use_sim_time': use_sim_time,
+            'use_ros2_control': use_ros2_control,
             'gui': gui,
             'world_fname': world_fname
         }.items(),

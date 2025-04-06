@@ -9,6 +9,7 @@ from launch.actions import (DeclareLaunchArgument, IncludeLaunchDescription,
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import (EnvironmentVariable, LaunchConfiguration,
                                   PathJoinSubstitution, PythonExpression)
+from launch.conditions import IfCondition, UnlessCondition
 
 
 def generate_launch_description():
@@ -22,10 +23,15 @@ def generate_launch_description():
     declare_world_fname = DeclareLaunchArgument(
         'world_fname', default_value='',
         description='gazebo world name (no extension)')
+    declare_use_ros2_control = DeclareLaunchArgument(
+        'use_ros2_control', default_value='false',
+        choices=['true', 'false'],
+        description='Use ros2_control(Gazebo) if true , Use gazebo_plugin if false.')
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     gui = LaunchConfiguration('gui')
     world_fname = LaunchConfiguration('world_fname')
+    use_ros2_control = LaunchConfiguration('use_ros2_control')
 
     pkg_megarover_samples_ros2 = FindPackageShare('megarover_samples_ros2')
 
@@ -79,15 +85,33 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
-            # ros <-  ignitoin sync : clock, tf(odom to base_footprinf), odom, scan, depth_image, image, points
+            # IGN -> ROS
             "/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock",
             "/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
-            # ros <-> ignition sync : cmd_vel, odom
-            "/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist",
-            "/odom@nav_msgs/msg/Odometry@ignition.msgs.Odometry",
-        ]
+            "/odom@nav_msgs/msg/Odometry[ignition.msgs.Odometry",
+
+            # ROS -> IGN
+            "/cmd_vel@geometry_msgs/msg/Twist]ignition.msgs.Twist",
+        ],
+        condition=UnlessCondition(use_ros2_control)
     )
+    base_topic_bridge_ros2_control = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        name='base_topic_bridge_ros2_control',
+        output='screen',
+        parameters=[{
+            'use_sim_time': use_sim_time
+        }],
+        arguments=[
+            # IGN -> ROS
+            "/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock",
+            "/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V",
+        ],
+        condition=IfCondition(use_ros2_control)
+    )
+
     scan_bridge = Node(
         package="ros_gz_bridge",
         executable="parameter_bridge",
@@ -97,6 +121,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # IGN -> ROS
             "/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan",
         ]
     )
@@ -109,6 +134,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # IGN -> ROS
             "/front_camera_sensor/depth_image@sensor_msgs/msg/Image[gz.msgs.Image",
             "/front_camera_sensor/image@sensor_msgs/msg/Image[gz.msgs.Image",
         ],
@@ -126,6 +152,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # IGN -> ROS
             "/front_camera_sensor/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ]
     )
@@ -138,6 +165,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # IGN -> ROS
             "/front_camera_sensor/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
         ],
     )
@@ -150,6 +178,7 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
+            # IGN -> ROS
             "/front_camera_sensor/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
         ],
         remappings=[
@@ -161,6 +190,7 @@ def generate_launch_description():
         declare_use_sim_time,
         declare_gui,
         declare_world_fname,
+        declare_use_ros2_control,
 
         set_env_gazebo_resource,
 
@@ -169,6 +199,7 @@ def generate_launch_description():
 
         # bridges
         base_topic_bridge,
+        base_topic_bridge_ros2_control,
         scan_bridge,
         image_bridge,
         points_bridge,

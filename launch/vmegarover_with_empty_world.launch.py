@@ -1,4 +1,3 @@
-from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 from launch import LaunchDescription
@@ -50,6 +49,7 @@ def generate_launch_description():
         ),
         launch_arguments={
             'use_sim_time': use_sim_time,
+            'use_ros2_control': use_ros2_control,
             'gui': gui,
             'world_fname': 'empty'
         }.items(),
