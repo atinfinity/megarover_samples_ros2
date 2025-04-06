@@ -37,7 +37,6 @@ def generate_launch_description():
             PathJoinSubstitution([launch_file_dir, 'utils', 'classic_gazebo.launch.py'])
         ),
         launch_arguments={
-            'use_ros2_control': use_ros2_control,
             'gui': gui,
             'world_fname': ''
         }.items(),
