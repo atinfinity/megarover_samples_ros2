@@ -37,7 +37,7 @@ diff_drive_controller:
 
     # cmd_vel_timeout: 500.0            # !! Does not work well on gazebo
     # publish_limited_velocity: true
-    use_stamped_vel: false
+    use_stamped_vel: true
     # velocity_rolling_window_size: 10
 
     # Velocity and acceleration limits

@@ -81,7 +81,7 @@
         name="gz_ros2_control::GazeboSimROS2ControlPlugin">
         <parameters>$(find megarover_samples_ros2)/config/diff_drive_controller.yaml</parameters>
         <ros>
-          <remapping>~/cmd_vel_unstamped:=/cmd_vel</remapping>
+          <remapping>~/cmd_vel_stamped:=/cmd_vel</remapping>
           <remapping>~/odom:=/odom</remapping>
         </ros>
       </plugin>
