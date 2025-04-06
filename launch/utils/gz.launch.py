@@ -86,14 +86,15 @@ def generate_launch_description():
             'use_sim_time': use_sim_time
         }],
         arguments=[
-            # ros <-  gz sync : clock, tf(odom to base_footprinf), odom, scan, depth_image, image, points
+            # GZ -> ROS
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
             "/tf@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V",
             "/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model",
-            # ros <-> gz sync : cmd_vel, odom
-            "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
-            "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
-            "/odom_truth@nav_msgs/msg/Odometry@gz.msgs.Odometry",
+            "/odom@nav_msgs/msg/Odometry[gz.msgs.Odometry",
+            "/odom_truth@nav_msgs/msg/Odometry[gz.msgs.Odometry",
+
+            # ROS -> ROS
+            "/cmd_vel@geometry_msgs/msg/Twist]gz.msgs.Twist",
         ],
         condition=UnlessCondition(use_ros2_control)
     )
