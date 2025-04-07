@@ -27,7 +27,7 @@
             <min_depth>0.2</min_depth>
             <max_depth>8.0</max_depth>
             <hack_baseline>0.07</hack_baseline>
-            <frame_name>${prefix}_camera_depth_link</frame_name>
+            <frame_name>${prefix}_camera_optical_link</frame_name>
             <distortion_k1>0.0</distortion_k1>
             <distortion_k2>0.0</distortion_k2>
             <distortion_k3>0.0</distortion_k3>
@@ -54,7 +54,7 @@
               <far>8.0</far>
             </clip>
             <!-- TODO XXX_camera_optical_link? -->
-            <optical_frame_id>${prefix}_camera_link</optical_frame_id>
+            <optical_frame_id>${prefix}_camera_optical_link</optical_frame_id>
             <noise>
               <type>gaussian</type>
               <mean>0.0</mean>
