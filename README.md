@@ -1,5 +1,8 @@
 # megarover_samples_ros2
 
+> [!CAUTION]
+> ROS 2 Galactic has reached EOL(end-of-life). So, this branch stopped to maintain.
+
 ## Introduction
 
 This is a ROS2 Package to develop package of megarover using Gazebo.  
