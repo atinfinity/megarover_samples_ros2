@@ -15,7 +15,7 @@
             </image>
             <clip>
               <near>0.02</near>
-              <far>8.0</far>
+              <far>100.0</far>
             </clip>
             <noise>
               <type>gaussian</type>
@@ -51,8 +51,14 @@
             </image>
             <clip>
               <near>0.02</near>
-              <far>8.0</far>
+              <far>100.0</far>
             </clip>
+            <depth_camera>
+              <clip>
+                <near>0.2</near>
+                <far>8.0</far>
+              </clip>
+            </depth_camera>
             <optical_frame_id>${prefix}_camera_optical_link</optical_frame_id>
             <noise>
               <type>gaussian</type>
