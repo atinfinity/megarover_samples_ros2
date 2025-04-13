@@ -23,7 +23,7 @@ find_package(sensor_msgs REQUIRED)
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
-install(DIRECTORY config launch maps models robots rviz scripts urdf worlds
+install(DIRECTORY config launch maps models robots rviz urdf worlds
   DESTINATION share/${PROJECT_NAME})
 
 if(BUILD_TESTING)
