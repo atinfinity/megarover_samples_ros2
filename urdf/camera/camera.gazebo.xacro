@@ -10,16 +10,19 @@
           <horizontal_fov>1.56207</horizontal_fov>
           <image>
             <width>640</width>
-            <height>400</height>
+            <height>480</height>
             <format>R8G8B8</format>
           </image>
           <clip>
             <near>0.02</near>
-            <far>8.0</far>
+            <far>100.0</far>
           </clip>
           <depth_camera>
+            <image>
+              <format>L_INT16</format>
+            </image>
             <clip>
-              <near>0.1</near>
+              <near>0.2</near>
               <far>8.0</far>
             </clip>
           </depth_camera>
