@@ -54,6 +54,9 @@
               <far>100.0</far>
             </clip>
             <depth_camera>
+              <image>
+                <format>L_INT16</format>
+              </image>
               <clip>
                 <near>0.2</near>
                 <far>8.0</far>
