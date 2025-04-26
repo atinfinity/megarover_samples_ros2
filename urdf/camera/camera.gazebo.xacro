@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="camera_gazebo_v0" params="gazebo prefix">
+  <xacro:macro name="camera_gazebo_v0" params="prefix">
     <gazebo reference="${prefix}_camera_link">
       <sensor name="${prefix}_camera_sensor" type="rgbd_camera">
         <pose>0 0 0 0 0 0</pose>
