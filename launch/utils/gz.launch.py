@@ -34,7 +34,7 @@ def generate_launch_description():
     use_ros2_control = LaunchConfiguration('use_ros2_control')
 
     pkg_megarover_samples_ros2 = FindPackageShare('megarover_samples_ros2')
-    worlds_dir = PathJoinSubstitution([pkg_megarover_samples_ros2, 'worlds', 'gz'])
+    worlds_dir = PathJoinSubstitution([pkg_megarover_samples_ros2, 'worlds'])
 
     set_env_gazebo_resource = SetEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',

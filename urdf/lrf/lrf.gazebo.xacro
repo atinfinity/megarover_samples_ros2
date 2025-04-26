@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <xacro:macro name="lrf_gazebo_v0" params="gazebo prefix min_rad max_rad min_range max_range">
+  <xacro:macro name="lrf_gazebo_v0" params="prefix min_rad max_rad min_range max_range">
     <gazebo reference="${prefix}_lrf_link">
       <sensor type="gpu_lidar" name="${prefix}_lrf_sensor">
         <pose>0 0 0 0 0 0</pose>
