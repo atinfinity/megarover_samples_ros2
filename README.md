@@ -15,7 +15,7 @@ If you use ROS 2 Jazzy, please check [jazzy](https://github.com/atinfinity/megar
 And, I have tested with [Eclipse Cyclone DDS](https://github.com/eclipse-cyclonedds/cyclonedds) as RMW implementation.
 If you use this RMW implementation, please install according to the following command.
 
-```
+```bash
 sudo apt install ros-humble-rmw-cyclonedds-cpp
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 ```
@@ -44,10 +44,11 @@ ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py
 
 ![](images/gazebo.png)
 
-NOTE (humble only):
-
-In **humble**, gazebo_ros2_control can be activated. If you want to do activation with gazebo_ros2_control, add the option `use_ros2_control:=true`.
-However, at this time, **gazebo_ros2_control and is still under development and unstable**.
+> [!NOTE]
+(humble only):
+> 
+> In **humble**, gazebo_ros2_control can be activated. If you want to do activation with gazebo_ros2_control, add the option `use_ros2_control:=true`.
+> However, at this time, **gazebo_ros2_control and is still under development and unstable**.
 
 ```bash
 ros2 launch megarover_samples_ros2 vmegarover_with_sample_world.launch.py use_ros2_control:=true
